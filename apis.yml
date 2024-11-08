@@ -1,0 +1,32 @@
+aid: meteosource
+name: Meteosource
+type: Index
+description: At an affordable price, you will receive accurate and reliable data that you can easily implement
+into your website or application. We also help you optimise weather-dependent activities.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+- Weather
+created: '2024-11-08'
+modified: '2024-11-08'
+url: https://github.com/api-search/meteosource-air-quality-data-api/apis.yml
+specificationVersion: '0.19'
+apis:
+- aid: meteosource:meteosource
+  name: Meteosource
+  description: At an affordable price, you will receive accurate and reliable data that you can easily implement
+into your website or application. We also help you optimise weather-dependent activities.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://www.meteosource.com/
+  baseURL: http://api.example.com
+  tags:
+  - Weather
+  properties:
+  - type: Documentation
+    url: https://www.meteosource.com/documentation
+common:
+- type: Signup
+  url: https://www.meteosource.com/client/sign-up
+maintainers:
+- FN: Kin Lane
+  X-twitter: apievangelist
+  email: info@apievangelist.com
