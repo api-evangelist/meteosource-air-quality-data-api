@@ -2,8 +2,7 @@
 aid: meteosource
 name: Meteosource
 type: Index
-description: At an affordable price, you will receive accurate and reliable data that you can easily implement
-into your website or application. We also help you optimise weather-dependent activities.
+description: At an affordable price, you will receive accurate and reliable data that you can easily implement into your website or application. We also help you optimise weather-dependent activities.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
 - Weather
@@ -14,8 +13,7 @@ specificationVersion: '0.19'
 apis:
 - aid: meteosource:meteosource
   name: Meteosource
-  description: At an affordable price, you will receive accurate and reliable data that you can easily implement
-into your website or application. We also help you optimise weather-dependent activities.
+  description: At an affordable price, you will receive accurate and reliable data that you can easily implement into your website or application. We also help you optimise weather-dependent activities.
   image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
   humanURL: https://www.meteosource.com/
   baseURL: http://api.example.com
