@@ -10,9 +10,9 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml
 tags:
   - Air Quality
-  - Weather
   - Environmental Data
   - Forecasting
+  - Weather
 created: '2024-11-07'
 modified: '2026-03-16'
 specificationVersion: '0.19'
