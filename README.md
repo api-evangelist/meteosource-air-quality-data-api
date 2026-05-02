@@ -16,7 +16,7 @@ MeteoSource provides an Air Quality API delivering hour-by-hour pollution data f
 ## Timestamps
 
 - **Created:** 2024-11-07 
-- **Modified:** 2026-03-16 
+- **Modified:** 2026-04-28 
 
 ## APIs
 
@@ -33,6 +33,7 @@ Access air quality data through the MeteoSource API for any location on Earth, p
 #### Properties
 
 - [Documentation](https://www.meteosource.com/air-quality-api)
+- [OpenAPI](openapi/meteosource-air-quality-data-api-openapi.yml)
 
 ## Common Properties
 

@@ -1,0 +1,464 @@
+openapi: 3.1.0
+info:
+  title: MeteoSource Air Quality Data API
+  description: >-
+    MeteoSource provides an Air Quality API delivering hour-by-hour pollution
+    data for any location on Earth, with forecasts up to 5 days ahead. The API
+    also offers weather forecast data, location lookup, weather maps, and
+    historical Time Machine data.
+  version: '1.0'
+  contact:
+    name: MeteoSource
+    url: https://www.meteosource.com/
+  license:
+    name: Proprietary
+    url: https://www.meteosource.com/terms-of-service
+servers:
+  - url: https://www.meteosource.com/api/v1
+    description: Production
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+tags:
+  - name: Weather
+    description: Current and forecasted weather endpoints.
+  - name: Air Quality
+    description: Air quality and pollution forecasts.
+  - name: Locations
+    description: Location lookup endpoints.
+  - name: Maps
+    description: Tile-based weather and pollution maps.
+  - name: History
+    description: Historical Time Machine data.
+paths:
+  /free/point:
+    get:
+      summary: Get point weather forecast (free tier)
+      description: Returns weather and forecast data for a point location on the free tier.
+      operationId: getFreePointWeather
+      tags:
+        - Weather
+      parameters:
+        - $ref: '#/components/parameters/PlaceId'
+        - $ref: '#/components/parameters/Lat'
+        - $ref: '#/components/parameters/Lon'
+        - $ref: '#/components/parameters/Sections'
+        - $ref: '#/components/parameters/Timezone'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/Units'
+      responses:
+        '200':
+          description: Weather forecast response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointWeatherResponse'
+  /flexi/point:
+    get:
+      summary: Get point weather forecast (flexi tier)
+      description: Returns weather and forecast data for a point location on the flexi tier.
+      operationId: getFlexiPointWeather
+      tags:
+        - Weather
+      parameters:
+        - $ref: '#/components/parameters/PlaceId'
+        - $ref: '#/components/parameters/Lat'
+        - $ref: '#/components/parameters/Lon'
+        - $ref: '#/components/parameters/Sections'
+        - $ref: '#/components/parameters/Timezone'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/Units'
+      responses:
+        '200':
+          description: Weather forecast response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointWeatherResponse'
+  /flexi/air_quality:
+    get:
+      summary: Get point air quality forecast
+      description: Returns hour-by-hour air quality and pollution forecasts for a point location.
+      operationId: getAirQuality
+      tags:
+        - Air Quality
+      parameters:
+        - $ref: '#/components/parameters/PlaceId'
+        - $ref: '#/components/parameters/Lat'
+        - $ref: '#/components/parameters/Lon'
+        - $ref: '#/components/parameters/Timezone'
+      responses:
+        '200':
+          description: Air quality forecast response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AirQualityResponse'
+  /free/find_places:
+    get:
+      summary: Find places by name or ZIP
+      description: Search for locations by place name or ZIP code.
+      operationId: findPlaces
+      tags:
+        - Locations
+      parameters:
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+        - name: area
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+  /free/find_places_prefix:
+    get:
+      summary: Find places by prefix
+      description: Search for locations by prefix.
+      operationId: findPlacesByPrefix
+      tags:
+        - Locations
+      parameters:
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+        - name: area
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+  /free/nearest_place:
+    get:
+      summary: Find nearest place to coordinates
+      description: Returns the nearest known place for the given coordinates.
+      operationId: findNearestPlace
+      tags:
+        - Locations
+      parameters:
+        - $ref: '#/components/parameters/Lat'
+        - $ref: '#/components/parameters/Lon'
+        - name: language
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Nearest place.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+  /flexi/map:
+    get:
+      summary: Get weather or pollution map
+      description: Returns a PNG or PBF map tile for the requested area and variable.
+      operationId: getMap
+      tags:
+        - Maps
+      parameters:
+        - name: tile_x
+          in: query
+          schema:
+            type: integer
+        - name: tile_y
+          in: query
+          schema:
+            type: integer
+        - name: tile_zoom
+          in: query
+          schema:
+            type: integer
+        - name: min_lat
+          in: query
+          schema:
+            type: number
+        - name: min_lon
+          in: query
+          schema:
+            type: number
+        - name: max_lat
+          in: query
+          schema:
+            type: number
+        - name: max_lon
+          in: query
+          schema:
+            type: number
+        - name: variable
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - temperature
+              - feels_like_temperature
+              - clouds
+              - precipitation
+              - wind_speed
+              - wind_gust
+              - pressure
+              - humidity
+              - wave_height
+              - wave_period
+              - sea_temperature
+              - air_quality
+              - ozone_surface
+              - ozone_total
+              - no2
+              - pm2.5
+        - name: datetime
+          in: query
+          schema:
+            type: string
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum:
+              - png
+              - pbf
+            default: png
+      responses:
+        '200':
+          description: Tile image or vector data.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/x-protobuf:
+              schema:
+                type: string
+                format: binary
+  /flexi/time_machine:
+    get:
+      summary: Get historical Time Machine data
+      description: Returns historical hourly records, daily aggregates, and 40-year statistics.
+      operationId: getTimeMachine
+      tags:
+        - History
+      parameters:
+        - $ref: '#/components/parameters/PlaceId'
+        - $ref: '#/components/parameters/Lat'
+        - $ref: '#/components/parameters/Lon'
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - $ref: '#/components/parameters/Timezone'
+        - $ref: '#/components/parameters/Units'
+        - $ref: '#/components/parameters/Language'
+      responses:
+        '200':
+          description: Historical weather data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeMachineResponse'
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  parameters:
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Lon:
+      name: lon
+      in: query
+      description: Longitude in decimal degrees.
+      schema:
+        type: number
+    Sections:
+      name: sections
+      in: query
+      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
+      schema:
+        type: string
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
+    Language:
+      name: language
+      in: query
+      description: ISO language code.
+      schema:
+        type: string
+        enum:
+          - en
+          - es
+          - fr
+          - de
+          - pl
+          - pt
+          - cs
+    Units:
+      name: units
+      in: query
+      description: Unit system for the response.
+      schema:
+        type: string
+        enum:
+          - auto
+          - metric
+          - us
+          - uk
+          - ca
+  schemas:
+    Place:
+      type: object
+      properties:
+        place_id:
+          type: string
+        name:
+          type: string
+        adm_area1:
+          type: string
+        adm_area2:
+          type: string
+        country:
+          type: string
+        lat:
+          type: string
+        lon:
+          type: string
+        timezone:
+          type: string
+        type:
+          type: string
+    PointWeatherResponse:
+      type: object
+      properties:
+        lat:
+          type: string
+        lon:
+          type: string
+        elevation:
+          type: number
+        timezone:
+          type: string
+        units:
+          type: string
+        current:
+          type: object
+        hourly:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+        daily:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+        minutely:
+          type: object
+        alerts:
+          type: object
+    AirQualityResponse:
+      type: object
+      properties:
+        lat:
+          type: string
+        lon:
+          type: string
+        elevation:
+          type: number
+        timezone:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              aerosol_550:
+                type: number
+              air_quality:
+                type: integer
+              co_surface:
+                type: number
+              pm10:
+                type: number
+              pm25:
+                type: number
+              no2_surface:
+                type: number
+              ozone_surface:
+                type: number
+              dust:
+                type: number
+              so2_surface:
+                type: number
+    TimeMachineResponse:
+      type: object
+      properties:
+        lat:
+          type: string
+        lon:
+          type: string
+        units:
+          type: string
+        timezone:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+        daily:
+          type: object
+        statistics:
+          type: object
