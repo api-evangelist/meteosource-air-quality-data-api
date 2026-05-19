@@ -1,0 +1,126 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MeteoSource Air Quality Data API — Maps
+  description: 'MeteoSource Air Quality Data API — Maps. 1 operations. Lead operation: Get weather or pollution map. Self-contained
+    Naftiko capability covering one Meteosource Air Quality Data Api business surface.'
+  tags:
+  - Meteosource Air Quality Data Api
+  - Maps
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY: METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: meteosource-air-quality-data-maps
+    baseUri: https://www.meteosource.com/api/v1
+    description: MeteoSource Air Quality Data API — Maps business capability. Self-contained, no shared references.
+    resources:
+    - name: flexi-map
+      path: /flexi/map
+      operations:
+      - name: getmap
+        method: GET
+        description: Get weather or pollution map
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tile_x
+          in: query
+          type: integer
+        - name: tile_y
+          in: query
+          type: integer
+        - name: tile_zoom
+          in: query
+          type: integer
+        - name: min_lat
+          in: query
+          type: number
+        - name: min_lon
+          in: query
+          type: number
+        - name: max_lat
+          in: query
+          type: number
+        - name: max_lon
+          in: query
+          type: number
+        - name: variable
+          in: query
+          type: string
+          required: true
+        - name: datetime
+          in: query
+          type: string
+        - name: format
+          in: query
+          type: string
+    authentication:
+      type: apikey
+      key: key
+      value: '{{env.METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: meteosource-air-quality-data-maps-rest
+    port: 8080
+    description: REST adapter for MeteoSource Air Quality Data API — Maps. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/flexi/map
+      name: flexi-map
+      description: REST surface for flexi-map.
+      operations:
+      - method: GET
+        name: getmap
+        description: Get weather or pollution map
+        call: meteosource-air-quality-data-maps.getmap
+        with:
+          tile_x: rest.tile_x
+          tile_y: rest.tile_y
+          tile_zoom: rest.tile_zoom
+          min_lat: rest.min_lat
+          min_lon: rest.min_lon
+          max_lat: rest.max_lat
+          max_lon: rest.max_lon
+          variable: rest.variable
+          datetime: rest.datetime
+          format: rest.format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: meteosource-air-quality-data-maps-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MeteoSource Air Quality Data API — Maps. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-weather-pollution-map
+      description: Get weather or pollution map
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: meteosource-air-quality-data-maps.getmap
+      with:
+        tile_x: tools.tile_x
+        tile_y: tools.tile_y
+        tile_zoom: tools.tile_zoom
+        min_lat: tools.min_lat
+        min_lon: tools.min_lon
+        max_lat: tools.max_lat
+        max_lon: tools.max_lon
+        variable: tools.variable
+        datetime: tools.datetime
+        format: tools.format
+      outputParameters:
+      - type: object
+        mapping: $.

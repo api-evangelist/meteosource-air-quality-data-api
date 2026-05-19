@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: MeteoSource Air Quality Data API — History
+  description: 'MeteoSource Air Quality Data API — History. 1 operations. Lead operation: Get historical Time Machine data.
+    Self-contained Naftiko capability covering one Meteosource Air Quality Data Api business surface.'
+  tags:
+  - Meteosource Air Quality Data Api
+  - History
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY: METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: meteosource-air-quality-data-history
+    baseUri: https://www.meteosource.com/api/v1
+    description: MeteoSource Air Quality Data API — History business capability. Self-contained, no shared references.
+    resources:
+    - name: flexi-time_machine
+      path: /flexi/time_machine
+      operations:
+      - name: gettimemachine
+        method: GET
+        description: Get historical Time Machine data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: date
+          in: query
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: key
+      value: '{{env.METEOSOURCE_AIR_QUALITY_DATA_API_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: meteosource-air-quality-data-history-rest
+    port: 8080
+    description: REST adapter for MeteoSource Air Quality Data API — History. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/flexi/time-machine
+      name: flexi-time-machine
+      description: REST surface for flexi-time_machine.
+      operations:
+      - method: GET
+        name: gettimemachine
+        description: Get historical Time Machine data
+        call: meteosource-air-quality-data-history.gettimemachine
+        with:
+          date: rest.date
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: meteosource-air-quality-data-history-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for MeteoSource Air Quality Data API — History. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-historical-time-machine-data
+      description: Get historical Time Machine data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: meteosource-air-quality-data-history.gettimemachine
+      with:
+        date: tools.date
+      outputParameters:
+      - type: object
+        mapping: $.
