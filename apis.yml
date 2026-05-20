@@ -6,45 +6,47 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml
 tags:
-- Air Quality
-- Environmental Data
-- Forecasting
-- Weather
+  - Air Quality
+  - Environmental Data
+  - Forecasting
+  - Weather
 created: '2024-11-07'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api
-  name: MeteoSource Air Quality Data API
-  tags:
-  - Air Quality
-  - Weather
-  humanURL: https://www.meteosource.com/air-quality-api
-  baseURL: https://www.meteosource.com/api/v1
-  properties:
-  - url: https://www.meteosource.com/air-quality-api
-    type: Documentation
-  - url: openapi/meteosource-air-quality-data-api-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/meteosource-air-quality-data-air-quality.yaml
-  - type: NaftikoCapability
-    url: capabilities/meteosource-air-quality-data-history.yaml
-  - type: NaftikoCapability
-    url: capabilities/meteosource-air-quality-data-locations.yaml
-  - type: NaftikoCapability
-    url: capabilities/meteosource-air-quality-data-maps.yaml
-  - type: NaftikoCapability
-    url: capabilities/meteosource-air-quality-data-weather.yaml
-  description: Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
-    forecasts up to 5 days.
+  - aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api
+    name: MeteoSource Air Quality Data API
+    tags:
+    - Air Quality
+    - Weather
+    humanURL: https://www.meteosource.com/air-quality-api
+    baseURL: https://www.meteosource.com/api/v1
+    properties:
+    - url: https://www.meteosource.com/air-quality-api
+      type: Documentation
+    - url: openapi/meteosource-air-quality-data-api-openapi.yml
+      type: OpenAPI
+    - type: NaftikoCapability
+      url: capabilities/meteosource-air-quality-data-air-quality.yaml
+    - type: NaftikoCapability
+      url: capabilities/meteosource-air-quality-data-history.yaml
+    - type: NaftikoCapability
+      url: capabilities/meteosource-air-quality-data-locations.yaml
+    - type: NaftikoCapability
+      url: capabilities/meteosource-air-quality-data-maps.yaml
+    - type: NaftikoCapability
+      url: capabilities/meteosource-air-quality-data-weather.yaml
+    description: Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
+      forecasts up to 5 days.
 common:
-- type: Portal
-  url: https://www.meteosource.com/
-- type: Pricing
-  url: https://www.meteosource.com/pricing
-- type: SignUp
-  url: https://www.meteosource.com/client/register
+  - type: GitHubOrganization
+    url: https://github.com/Meteosource
+  - type: Portal
+    url: https://www.meteosource.com/
+  - type: Pricing
+    url: https://www.meteosource.com/pricing
+  - type: SignUp
+    url: https://www.meteosource.com/client/register
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
