@@ -1,6 +1,7 @@
 aid: meteosource-air-quality-data-api
 name: MeteoSource Air Quality Data API
-description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with
+description: >-
+  MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with
   forecasts up to 5 days ahead. The API also offers weather forecast data from multiple meteorological models.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -17,26 +18,17 @@ apis:
   - aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api
     name: MeteoSource Air Quality Data API
     tags:
-    - Air Quality
-    - Weather
+      - Air Quality
+      - Weather
     humanURL: https://www.meteosource.com/air-quality-api
     baseURL: https://www.meteosource.com/api/v1
     properties:
-    - url: https://www.meteosource.com/air-quality-api
-      type: Documentation
-    - url: openapi/meteosource-air-quality-data-api-openapi.yml
-      type: OpenAPI
-    - type: NaftikoCapability
-      url: capabilities/meteosource-air-quality-data-air-quality.yaml
-    - type: NaftikoCapability
-      url: capabilities/meteosource-air-quality-data-history.yaml
-    - type: NaftikoCapability
-      url: capabilities/meteosource-air-quality-data-locations.yaml
-    - type: NaftikoCapability
-      url: capabilities/meteosource-air-quality-data-maps.yaml
-    - type: NaftikoCapability
-      url: capabilities/meteosource-air-quality-data-weather.yaml
-    description: Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
+      - url: https://www.meteosource.com/air-quality-api
+        type: Documentation
+      - url: openapi/meteosource-air-quality-data-api-openapi.yml
+        type: OpenAPI
+    description: >-
+      Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
       forecasts up to 5 days.
 common:
   - type: GitHubOrganization

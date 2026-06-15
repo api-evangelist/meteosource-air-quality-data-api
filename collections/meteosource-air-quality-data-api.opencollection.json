@@ -1,0 +1,408 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Air Quality Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Weather",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get point weather forecast (free tier)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/point",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "sections",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              }
+            ]
+          },
+          "docs": "Returns weather and forecast data for a point location on the free tier."
+        },
+        {
+          "info": {
+            "name": "Get point weather forecast (flexi tier)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/point",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "sections",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              }
+            ]
+          },
+          "docs": "Returns weather and forecast data for a point location on the flexi tier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Air Quality",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get point air quality forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/air_quality",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              }
+            ]
+          },
+          "docs": "Returns hour-by-hour air quality and pollution forecasts for a point location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find places by name or ZIP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/find_places",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "area",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search for locations by place name or ZIP code."
+        },
+        {
+          "info": {
+            "name": "Find places by prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/find_places_prefix",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "area",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search for locations by prefix."
+        },
+        {
+          "info": {
+            "name": "Find nearest place to coordinates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/nearest_place",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the nearest known place for the given coordinates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Maps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get weather or pollution map",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/map",
+            "params": [
+              {
+                "name": "tile_x",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tile_y",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tile_zoom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "min_lat",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "min_lon",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_lat",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_lon",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "variable",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "datetime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a PNG or PBF map tile for the requested area and variable."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get historical Time Machine data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/time_machine",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              }
+            ]
+          },
+          "docs": "Returns historical hourly records, daily aggregates, and 40-year statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

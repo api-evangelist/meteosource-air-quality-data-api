@@ -1,0 +1,1143 @@
+{
+  "item": [
+    {
+      "id": "a28c8ef6-e741-4ef8-8a72-df3e8bc45cf6",
+      "name": "Weather",
+      "description": {
+        "content": "Current and forecasted weather endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "254fdbde-f5f5-41fa-af9c-9999cfb59c8a",
+          "name": "Get point weather forecast (free tier)",
+          "request": {
+            "name": "Get point weather forecast (free tier)",
+            "description": {
+              "content": "Returns weather and forecast data for a point location on the free tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "point"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "sections",
+                  "value": "<string>",
+                  "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "ISO language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "units",
+                  "value": "<string>",
+                  "description": "Unit system for the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9a0fa561-8fd6-47a0-adf9-6c4c19584859",
+              "name": "Weather forecast response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "point"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sections",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "units",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"elevation\": 4456.498739437251,\n  \"timezone\": \"string\",\n  \"units\": \"string\",\n  \"current\": {},\n  \"hourly\": {},\n  \"daily\": {},\n  \"minutely\": {},\n  \"alerts\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f808848-f446-435e-9477-85715406dd1a",
+          "name": "Get point weather forecast (flexi tier)",
+          "request": {
+            "name": "Get point weather forecast (flexi tier)",
+            "description": {
+              "content": "Returns weather and forecast data for a point location on the flexi tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "point"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "sections",
+                  "value": "<string>",
+                  "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "ISO language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "units",
+                  "value": "<string>",
+                  "description": "Unit system for the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "39ce40e0-f9f9-492f-8e2f-b39dcd489474",
+              "name": "Weather forecast response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "point"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sections",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "units",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"elevation\": 4456.498739437251,\n  \"timezone\": \"string\",\n  \"units\": \"string\",\n  \"current\": {},\n  \"hourly\": {},\n  \"daily\": {},\n  \"minutely\": {},\n  \"alerts\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "13a4e0cc-f372-4216-a021-98def690102d",
+      "name": "Air Quality",
+      "description": {
+        "content": "Air quality and pollution forecasts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2bbfd502-e82c-4873-9033-38005dda72e6",
+          "name": "Get point air quality forecast",
+          "request": {
+            "name": "Get point air quality forecast",
+            "description": {
+              "content": "Returns hour-by-hour air quality and pollution forecasts for a point location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "air_quality"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d535779f-b458-4234-be34-98e49621eb34",
+              "name": "Air quality forecast response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "air_quality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"elevation\": 4673.48419729406,\n  \"timezone\": \"string\",\n  \"data\": [\n    {\n      \"date\": \"1987-05-14T18:50:27.268Z\",\n      \"aerosol_550\": 6999.205534079846,\n      \"air_quality\": 2837,\n      \"co_surface\": 3584.1935707555094,\n      \"pm10\": 2967.0083758672495,\n      \"pm25\": 990.9860898058009,\n      \"no2_surface\": 5114.625880091155,\n      \"ozone_surface\": 1923.1318593630554,\n      \"dust\": 4621.2080063717885,\n      \"so2_surface\": 1321.7695550243968\n    },\n    {\n      \"date\": \"1962-07-17T04:59:39.677Z\",\n      \"aerosol_550\": 9299.907972411493,\n      \"air_quality\": 8597,\n      \"co_surface\": 8500.80792932375,\n      \"pm10\": 4818.707156389141,\n      \"pm25\": 4328.232198529827,\n      \"no2_surface\": 7934.103604455175,\n      \"ozone_surface\": 3727.1157897891394,\n      \"dust\": 4148.573470448175,\n      \"so2_surface\": 2301.775685761754\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "271c096d-2b3d-4f2d-bd65-632157a76a6b",
+      "name": "Locations",
+      "description": {
+        "content": "Location lookup endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e1fb6551-fb24-4889-853f-d7e8a5c628b9",
+          "name": "Find places by name or ZIP",
+          "request": {
+            "name": "Find places by name or ZIP",
+            "description": {
+              "content": "Search for locations by place name or ZIP code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "find_places"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "area",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abee985b-2c2f-4959-ba74-ef642c0e49bf",
+              "name": "Matching locations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "find_places"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "area",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cda6715a-8ae7-4556-8c5e-668e306d493d",
+          "name": "Find places by prefix",
+          "request": {
+            "name": "Find places by prefix",
+            "description": {
+              "content": "Search for locations by prefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "find_places_prefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "area",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5c4628c7-ea26-4060-8b93-822f642e9536",
+              "name": "Matching locations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "find_places_prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "area",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0658f520-db10-4770-9065-d6d1b56f01dc",
+          "name": "Find nearest place to coordinates",
+          "request": {
+            "name": "Find nearest place to coordinates",
+            "description": {
+              "content": "Returns the nearest known place for the given coordinates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "nearest_place"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c370b5d7-ebc0-4953-bfa9-89e8f6f862f6",
+              "name": "Nearest place.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "nearest_place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"place_id\": \"string\",\n  \"name\": \"string\",\n  \"adm_area1\": \"string\",\n  \"adm_area2\": \"string\",\n  \"country\": \"string\",\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"timezone\": \"string\",\n  \"type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "11814197-423e-4e99-a5f4-ade82b20fb5d",
+      "name": "Maps",
+      "description": {
+        "content": "Tile-based weather and pollution maps.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "06f20cd0-8d10-4f81-9c15-ae00cf371106",
+          "name": "Get weather or pollution map",
+          "request": {
+            "name": "Get weather or pollution map",
+            "description": {
+              "content": "Returns a PNG or PBF map tile for the requested area and variable.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "map"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tile_x",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tile_y",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tile_zoom",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_lat",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_lon",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_lat",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_lon",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "variable",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "png"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21911836-dd85-4437-bed7-159ce02bc159",
+              "name": "Tile image or vector data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "map"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tile_x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tile_y",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tile_zoom",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "variable",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "png"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "def9e76c-5e6c-4e4e-b3e5-4cebed73394c",
+      "name": "History",
+      "description": {
+        "content": "Historical Time Machine data.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51a8c0fc-8349-420f-a669-d5e892dcc5c3",
+          "name": "Get historical Time Machine data",
+          "request": {
+            "name": "Get historical Time Machine data",
+            "description": {
+              "content": "Returns historical hourly records, daily aggregates, and 40-year statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "time_machine"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "units",
+                  "value": "<string>",
+                  "description": "Unit system for the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "ISO language code."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22089a97-3748-493c-91da-258773c7df92",
+              "name": "Historical weather data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "time_machine"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "units",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"units\": \"string\",\n  \"timezone\": \"string\",\n  \"daily\": {},\n  \"statistics\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.meteosource.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1b2e3dcb-7ead-4a8c-9294-ab8d5f11a1dc",
+    "name": "MeteoSource Air Quality Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.\n\nContact Support:\n Name: MeteoSource",
+      "type": "text/plain"
+    }
+  }
+}
