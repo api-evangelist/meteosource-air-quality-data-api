@@ -4,7 +4,7 @@ description: >-
   MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with
   forecasts up to 5 days ahead. The API also offers weather forecast data from multiple meteorological models.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml
 tags:
   - Air Quality
