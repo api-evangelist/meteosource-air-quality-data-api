@@ -37,7 +37,7 @@ common:
     url: https://www.meteosource.com/
   - type: Pricing
     url: https://www.meteosource.com/pricing
-  - type: SignUp
+  - type: Signup
     url: https://www.meteosource.com/client/register
 maintainers:
   - FN: Kin Lane
