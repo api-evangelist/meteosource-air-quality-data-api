@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/meteosource-air-quality-data-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: apiKeyQuery
+  type: apiKey
+  in: query
+  parameter: key
+  sources:
+  - openapi/meteosource-air-quality-data-api-openapi.yml
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  sources:
+  - openapi/meteosource-air-quality-data-api-openapi.yml

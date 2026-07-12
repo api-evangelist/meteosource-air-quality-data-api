@@ -31,6 +31,10 @@ apis:
       Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
       forecasts up to 5 days.
 common:
+  - type: DomainSecurity
+    url: security/meteosource-air-quality-data-api-domain-security.yml
+  - type: Authentication
+    url: authentication/meteosource-air-quality-data-api-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/Meteosource
   - type: Portal
@@ -39,6 +43,8 @@ common:
     url: https://www.meteosource.com/pricing
   - type: Signup
     url: https://www.meteosource.com/client/register
+  - url: https://www.meteosource.com/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
