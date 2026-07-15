@@ -31,6 +31,8 @@ apis:
       Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
       forecasts up to 5 days.
 common:
+  - type: AgenticAccess
+    url: agentic-access/meteosource-air-quality-data-api-agentic-access.yml
   - type: DomainSecurity
     url: security/meteosource-air-quality-data-api-domain-security.yml
   - type: Authentication

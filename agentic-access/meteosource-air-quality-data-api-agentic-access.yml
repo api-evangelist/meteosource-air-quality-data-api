@@ -1,0 +1,94 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/meteosource-air-quality-data-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 8
+  by_action_class:
+    connected: 8
+  by_consequence:
+    read: 8
+  human_in_the_loop_required: 0
+operations:
+- path: /free/point
+  method: get
+  operationId: getFreePointWeather
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flexi/point
+  method: get
+  operationId: getFlexiPointWeather
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flexi/air_quality
+  method: get
+  operationId: getAirQuality
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /free/find_places
+  method: get
+  operationId: findPlaces
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /free/find_places_prefix
+  method: get
+  operationId: findPlacesByPrefix
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /free/nearest_place
+  method: get
+  operationId: findNearestPlace
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flexi/map
+  method: get
+  operationId: getMap
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flexi/time_machine
+  method: get
+  operationId: getTimeMachine
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
