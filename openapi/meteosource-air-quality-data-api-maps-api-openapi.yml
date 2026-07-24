@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: MeteoSource Data Air Quality Maps API
+  description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
+  version: '1.0'
+  contact:
+    name: MeteoSource
+    url: https://www.meteosource.com/
+  license:
+    name: Proprietary
+    url: https://www.meteosource.com/terms-of-service
+servers:
+- url: https://www.meteosource.com/api/v1
+  description: Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+tags:
+- name: Maps
+  description: Tile-based weather and pollution maps.
+paths:
+  /flexi/map:
+    get:
+      summary: Get weather or pollution map
+      description: Returns a PNG or PBF map tile for the requested area and variable.
+      operationId: getMap
+      tags:
+      - Maps
+      parameters:
+      - name: tile_x
+        in: query
+        schema:
+          type: integer
+      - name: tile_y
+        in: query
+        schema:
+          type: integer
+      - name: tile_zoom
+        in: query
+        schema:
+          type: integer
+      - name: min_lat
+        in: query
+        schema:
+          type: number
+      - name: min_lon
+        in: query
+        schema:
+          type: number
+      - name: max_lat
+        in: query
+        schema:
+          type: number
+      - name: max_lon
+        in: query
+        schema:
+          type: number
+      - name: variable
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - temperature
+          - feels_like_temperature
+          - clouds
+          - precipitation
+          - wind_speed
+          - wind_gust
+          - pressure
+          - humidity
+          - wave_height
+          - wave_period
+          - sea_temperature
+          - air_quality
+          - ozone_surface
+          - ozone_total
+          - no2
+          - pm2.5
+      - name: datetime
+        in: query
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - png
+          - pbf
+          default: png
+      responses:
+        '200':
+          description: Tile image or vector data.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/x-protobuf:
+              schema:
+                type: string
+                format: binary
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key

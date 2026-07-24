@@ -1,0 +1,166 @@
+openapi: 3.1.0
+info:
+  title: MeteoSource Data Air Quality Weather API
+  description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
+  version: '1.0'
+  contact:
+    name: MeteoSource
+    url: https://www.meteosource.com/
+  license:
+    name: Proprietary
+    url: https://www.meteosource.com/terms-of-service
+servers:
+- url: https://www.meteosource.com/api/v1
+  description: Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+tags:
+- name: Weather
+  description: Current and forecasted weather endpoints.
+paths:
+  /free/point:
+    get:
+      summary: Get point weather forecast (free tier)
+      description: Returns weather and forecast data for a point location on the free tier.
+      operationId: getFreePointWeather
+      tags:
+      - Weather
+      parameters:
+      - $ref: '#/components/parameters/PlaceId'
+      - $ref: '#/components/parameters/Lat'
+      - $ref: '#/components/parameters/Lon'
+      - $ref: '#/components/parameters/Sections'
+      - $ref: '#/components/parameters/Timezone'
+      - $ref: '#/components/parameters/Language'
+      - $ref: '#/components/parameters/Units'
+      responses:
+        '200':
+          description: Weather forecast response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointWeatherResponse'
+  /flexi/point:
+    get:
+      summary: Get point weather forecast (flexi tier)
+      description: Returns weather and forecast data for a point location on the flexi tier.
+      operationId: getFlexiPointWeather
+      tags:
+      - Weather
+      parameters:
+      - $ref: '#/components/parameters/PlaceId'
+      - $ref: '#/components/parameters/Lat'
+      - $ref: '#/components/parameters/Lon'
+      - $ref: '#/components/parameters/Sections'
+      - $ref: '#/components/parameters/Timezone'
+      - $ref: '#/components/parameters/Language'
+      - $ref: '#/components/parameters/Units'
+      responses:
+        '200':
+          description: Weather forecast response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointWeatherResponse'
+components:
+  parameters:
+    Lon:
+      name: lon
+      in: query
+      description: Longitude in decimal degrees.
+      schema:
+        type: number
+    Language:
+      name: language
+      in: query
+      description: ISO language code.
+      schema:
+        type: string
+        enum:
+        - en
+        - es
+        - fr
+        - de
+        - pl
+        - pt
+        - cs
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
+    Sections:
+      name: sections
+      in: query
+      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
+      schema:
+        type: string
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Units:
+      name: units
+      in: query
+      description: Unit system for the response.
+      schema:
+        type: string
+        enum:
+        - auto
+        - metric
+        - us
+        - uk
+        - ca
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
+  schemas:
+    PointWeatherResponse:
+      type: object
+      properties:
+        lat:
+          type: string
+        lon:
+          type: string
+        elevation:
+          type: number
+        timezone:
+          type: string
+        units:
+          type: string
+        current:
+          type: object
+        hourly:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+        daily:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+        minutely:
+          type: object
+        alerts:
+          type: object
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key

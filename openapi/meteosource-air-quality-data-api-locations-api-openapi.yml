@@ -1,0 +1,147 @@
+openapi: 3.1.0
+info:
+  title: MeteoSource Data Air Quality Locations API
+  description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
+  version: '1.0'
+  contact:
+    name: MeteoSource
+    url: https://www.meteosource.com/
+  license:
+    name: Proprietary
+    url: https://www.meteosource.com/terms-of-service
+servers:
+- url: https://www.meteosource.com/api/v1
+  description: Production
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+tags:
+- name: Locations
+  description: Location lookup endpoints.
+paths:
+  /free/find_places:
+    get:
+      summary: Find places by name or ZIP
+      description: Search for locations by place name or ZIP code.
+      operationId: findPlaces
+      tags:
+      - Locations
+      parameters:
+      - name: text
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: language
+        in: query
+        schema:
+          type: string
+      - name: area
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+  /free/find_places_prefix:
+    get:
+      summary: Find places by prefix
+      description: Search for locations by prefix.
+      operationId: findPlacesByPrefix
+      tags:
+      - Locations
+      parameters:
+      - name: text
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: language
+        in: query
+        schema:
+          type: string
+      - name: area
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+  /free/nearest_place:
+    get:
+      summary: Find nearest place to coordinates
+      description: Returns the nearest known place for the given coordinates.
+      operationId: findNearestPlace
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/Lat'
+      - $ref: '#/components/parameters/Lon'
+      - name: language
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Nearest place.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+components:
+  parameters:
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Lon:
+      name: lon
+      in: query
+      description: Longitude in decimal degrees.
+      schema:
+        type: number
+  schemas:
+    Place:
+      type: object
+      properties:
+        place_id:
+          type: string
+        name:
+          type: string
+        adm_area1:
+          type: string
+        adm_area2:
+          type: string
+        country:
+          type: string
+        lat:
+          type: string
+        lon:
+          type: string
+        timezone:
+          type: string
+        type:
+          type: string
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key
