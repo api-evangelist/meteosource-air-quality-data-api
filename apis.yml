@@ -4,7 +4,20 @@ description: >-
   MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with
   forecasts up to 5 days ahead. The API also offers weather forecast data from multiple meteorological models.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/meteosource-air-quality-data-api.png
 url: https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml
 tags:
   - Air Quality
@@ -15,21 +28,66 @@ created: '2024-11-07'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api
-    name: MeteoSource Air Quality Data API
-    tags:
-      - Air Quality
-      - Weather
-    humanURL: https://www.meteosource.com/air-quality-api
-    baseURL: https://www.meteosource.com/api/v1
-    properties:
-      - url: https://www.meteosource.com/air-quality-api
-        type: Documentation
-      - url: openapi/meteosource-air-quality-data-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution
-      forecasts up to 5 days.
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-air-quality-api
+  name: MeteoSource Air Quality Data API Air Quality API
+  description: Air quality and pollution forecasts.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - Air Quality
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-air-quality-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-history-api
+  name: MeteoSource Air Quality Data API History API
+  description: Historical Time Machine data.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-history-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-locations-api
+  name: MeteoSource Air Quality Data API Locations API
+  description: Location lookup endpoints.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-locations-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-maps-api
+  name: MeteoSource Air Quality Data API Maps API
+  description: Tile-based weather and pollution maps.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - Maps
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-maps-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-weather-api
+  name: MeteoSource Air Quality Data API Weather API
+  description: Current and forecasted weather endpoints.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - Weather
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-weather-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
 common:
   - type: AgenticAccess
     url: agentic-access/meteosource-air-quality-data-api-agentic-access.yml
