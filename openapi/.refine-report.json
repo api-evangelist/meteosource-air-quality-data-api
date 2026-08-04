@@ -1,0 +1,22 @@
+{
+  "provider": "meteosource-air-quality-data-api",
+  "sources": [
+    "meteosource-air-quality-data-api-air-quality-api-openapi.yml",
+    "meteosource-air-quality-data-api-history-api-openapi.yml",
+    "meteosource-air-quality-data-api-locations-api-openapi.yml",
+    "meteosource-air-quality-data-api-maps-api-openapi.yml",
+    "meteosource-air-quality-data-api-weather-api-openapi.yml"
+  ],
+  "outputs": [
+    "meteosource-air-quality-data-api-air-quality-api-openapi.yml",
+    "meteosource-air-quality-data-api-history-api-openapi.yml",
+    "meteosource-air-quality-data-api-locations-api-openapi.yml",
+    "meteosource-air-quality-data-api-maps-api-openapi.yml",
+    "meteosource-air-quality-data-api-weather-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
