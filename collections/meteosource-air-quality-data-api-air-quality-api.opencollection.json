@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Data Air Quality API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Air Quality",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get point air quality forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/air_quality",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              }
+            ]
+          },
+          "docs": "Returns hour-by-hour air quality and pollution forecasts for a point location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

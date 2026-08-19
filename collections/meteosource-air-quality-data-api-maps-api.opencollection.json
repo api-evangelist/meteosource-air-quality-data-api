@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Data Air Quality Maps API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Maps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get weather or pollution map",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/map",
+            "params": [
+              {
+                "name": "tile_x",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tile_y",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tile_zoom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "min_lat",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "min_lon",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_lat",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_lon",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "variable",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "datetime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a PNG or PBF map tile for the requested area and variable."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,218 @@
+{
+  "item": [
+    {
+      "id": "f3fe15a4-5105-4b90-9adc-d0579ce07ee7",
+      "name": "Maps",
+      "description": {
+        "content": "Tile-based weather and pollution maps.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c20b841e-548b-4a05-988b-2015a2f6d28a",
+          "name": "Get weather or pollution map",
+          "request": {
+            "name": "Get weather or pollution map",
+            "description": {
+              "content": "Returns a PNG or PBF map tile for the requested area and variable.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "map"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tile_x",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tile_y",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tile_zoom",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_lat",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_lon",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_lat",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_lon",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "variable",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "png"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ecf66021-1ed9-47dd-94da-cc4e6a267b2b",
+              "name": "Tile image or vector data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "map"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tile_x",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tile_y",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tile_zoom",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "variable",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "png"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.meteosource.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ee9f90d9-b986-4c85-a070-391b6c70a4e7",
+    "name": "MeteoSource Data Air Quality Maps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.\n\nContact Support:\n Name: MeteoSource",
+      "type": "text/plain"
+    }
+  }
+}

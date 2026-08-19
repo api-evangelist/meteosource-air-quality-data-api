@@ -1,0 +1,345 @@
+{
+  "item": [
+    {
+      "id": "90dde9dc-2248-4715-b1ec-fe430a6acf26",
+      "name": "Weather",
+      "description": {
+        "content": "Current and forecasted weather endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8754ef56-cacc-44a9-8314-efc5b2de3a32",
+          "name": "Get point weather forecast (free tier)",
+          "request": {
+            "name": "Get point weather forecast (free tier)",
+            "description": {
+              "content": "Returns weather and forecast data for a point location on the free tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "point"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "sections",
+                  "value": "<string>",
+                  "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "ISO language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "units",
+                  "value": "<string>",
+                  "description": "Unit system for the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3fafc911-b7af-4c62-9afe-cc100c0fdf6e",
+              "name": "Weather forecast response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "point"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sections",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "units",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"elevation\": 6106.2768049257875,\n  \"timezone\": \"string\",\n  \"units\": \"string\",\n  \"current\": {},\n  \"hourly\": {},\n  \"daily\": {},\n  \"minutely\": {},\n  \"alerts\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b3a5a4b-ba0d-4b82-84fc-645dd68b7f8e",
+          "name": "Get point weather forecast (flexi tier)",
+          "request": {
+            "name": "Get point weather forecast (flexi tier)",
+            "description": {
+              "content": "Returns weather and forecast data for a point location on the flexi tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flexi",
+                "point"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "place_id",
+                  "value": "<string>",
+                  "description": "MeteoSource place identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "sections",
+                  "value": "<string>",
+                  "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "tzinfo timezone identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "ISO language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "units",
+                  "value": "<string>",
+                  "description": "Unit system for the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51f188ea-8b30-4915-95cb-c65800e0de40",
+              "name": "Weather forecast response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flexi",
+                    "point"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "place_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sections",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "units",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"elevation\": 6106.2768049257875,\n  \"timezone\": \"string\",\n  \"units\": \"string\",\n  \"current\": {},\n  \"hourly\": {},\n  \"daily\": {},\n  \"minutely\": {},\n  \"alerts\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.meteosource.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "585ba1b3-430a-4a96-948f-4e98cc68f11e",
+    "name": "MeteoSource Data Air Quality Weather API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.\n\nContact Support:\n Name: MeteoSource",
+      "type": "text/plain"
+    }
+  }
+}

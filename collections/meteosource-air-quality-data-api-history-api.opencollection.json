@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Data Air Quality History API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get historical Time Machine data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/time_machine",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              }
+            ]
+          },
+          "docs": "Returns historical hourly records, daily aggregates, and 40-year statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

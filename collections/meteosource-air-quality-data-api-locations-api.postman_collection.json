@@ -1,0 +1,368 @@
+{
+  "item": [
+    {
+      "id": "98ba6401-c51b-4368-a1cb-206bf4fb06d5",
+      "name": "Locations",
+      "description": {
+        "content": "Location lookup endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4c659c6-65fa-489a-835f-d9178ee3f545",
+          "name": "Find places by name or ZIP",
+          "request": {
+            "name": "Find places by name or ZIP",
+            "description": {
+              "content": "Search for locations by place name or ZIP code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "find_places"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "area",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2ce48b6-2c20-4188-b708-0830259f931f",
+              "name": "Matching locations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "find_places"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "area",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a197cd5-b1b1-4606-bd25-054600fbaa8a",
+          "name": "Find places by prefix",
+          "request": {
+            "name": "Find places by prefix",
+            "description": {
+              "content": "Search for locations by prefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "find_places_prefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "area",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7c9b1b5-d69c-45f7-9564-e1cf2c0969d1",
+              "name": "Matching locations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "find_places_prefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "area",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"place_id\": \"string\",\n    \"name\": \"string\",\n    \"adm_area1\": \"string\",\n    \"adm_area2\": \"string\",\n    \"country\": \"string\",\n    \"lat\": \"string\",\n    \"lon\": \"string\",\n    \"timezone\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b90e783-6927-4c5c-82ad-b97341ab6d20",
+          "name": "Find nearest place to coordinates",
+          "request": {
+            "name": "Find nearest place to coordinates",
+            "description": {
+              "content": "Returns the nearest known place for the given coordinates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free",
+                "nearest_place"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<number>",
+                  "description": "Latitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "lon",
+                  "value": "<number>",
+                  "description": "Longitude in decimal degrees."
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b235b12-d1bc-4e29-8961-8037c147fd2c",
+              "name": "Nearest place.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free",
+                    "nearest_place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "lon",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"place_id\": \"string\",\n  \"name\": \"string\",\n  \"adm_area1\": \"string\",\n  \"adm_area2\": \"string\",\n  \"country\": \"string\",\n  \"lat\": \"string\",\n  \"lon\": \"string\",\n  \"timezone\": \"string\",\n  \"type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.meteosource.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5f18637c-0f88-4807-bb0a-b555984a970c",
+    "name": "MeteoSource Data Air Quality Locations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.\n\nContact Support:\n Name: MeteoSource",
+      "type": "text/plain"
+    }
+  }
+}

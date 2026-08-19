@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Data Air Quality Weather API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Weather",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get point weather forecast (free tier)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/point",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "sections",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              }
+            ]
+          },
+          "docs": "Returns weather and forecast data for a point location on the free tier."
+        },
+        {
+          "info": {
+            "name": "Get point weather forecast (flexi tier)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/flexi/point",
+            "params": [
+              {
+                "name": "place_id",
+                "value": "",
+                "type": "query",
+                "description": "MeteoSource place identifier."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "sections",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all)."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "tzinfo timezone identifier."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "ISO language code."
+              },
+              {
+                "name": "units",
+                "value": "",
+                "type": "query",
+                "description": "Unit system for the response."
+              }
+            ]
+          },
+          "docs": "Returns weather and forecast data for a point location on the flexi tier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

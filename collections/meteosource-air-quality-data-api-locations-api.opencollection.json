@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MeteoSource Data Air Quality Locations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find places by name or ZIP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/find_places",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "area",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search for locations by place name or ZIP code."
+        },
+        {
+          "info": {
+            "name": "Find places by prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/find_places_prefix",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "area",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search for locations by prefix."
+        },
+        {
+          "info": {
+            "name": "Find nearest place to coordinates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.meteosource.com/api/v1/free/nearest_place",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the nearest known place for the given coordinates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
