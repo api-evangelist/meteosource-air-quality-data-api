@@ -4,6 +4,18 @@ description: >-
   MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with
   forecasts up to 5 days ahead. The API also offers weather forecast data from multiple meteorological models.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
