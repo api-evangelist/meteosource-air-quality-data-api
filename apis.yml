@@ -102,6 +102,8 @@ apis:
   - type: Documentation
     url: https://www.meteosource.com/air-quality-api
 common:
+  - type: Website
+    url: https://www.meteosource.com/
   - type: AgenticAccess
     url: agentic-access/meteosource-air-quality-data-api-agentic-access.yml
   - type: DomainSecurity
