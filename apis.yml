@@ -71,6 +71,8 @@ apis:
   humanURL: https://www.meteosource.com/air-quality-api
   baseURL: https://www.meteosource.com/api/v1
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
