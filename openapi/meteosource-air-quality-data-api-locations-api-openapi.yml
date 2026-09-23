@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: MeteoSource Data Air Quality Locations API
+  title: MeteoSource Air Quality Data Locations API
   description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
   version: '1.0'
   contact:
@@ -102,16 +102,16 @@ paths:
                 $ref: '#/components/schemas/Place'
 components:
   parameters:
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
     Lon:
       name: lon
       in: query
       description: Longitude in decimal degrees.
+      schema:
+        type: number
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
       schema:
         type: number
   schemas:
