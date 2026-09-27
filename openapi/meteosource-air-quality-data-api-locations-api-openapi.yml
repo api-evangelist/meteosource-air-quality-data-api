@@ -102,16 +102,16 @@ paths:
                 $ref: '#/components/schemas/Place'
 components:
   parameters:
-    Lon:
-      name: lon
-      in: query
-      description: Longitude in decimal degrees.
-      schema:
-        type: number
     Lat:
       name: lat
       in: query
       description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Lon:
+      name: lon
+      in: query
+      description: Longitude in decimal degrees.
       schema:
         type: number
   schemas:

@@ -40,28 +40,28 @@ paths:
                 $ref: '#/components/schemas/AirQualityResponse'
 components:
   parameters:
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
     Lon:
       name: lon
       in: query
       description: Longitude in decimal degrees.
       schema:
         type: number
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
     Lat:
       name: lat
       in: query
       description: Latitude in decimal degrees.
       schema:
         type: number
-    PlaceId:
-      name: place_id
+    Timezone:
+      name: timezone
       in: query
-      description: MeteoSource place identifier.
+      description: tzinfo timezone identifier.
       schema:
         type: string
   schemas:
