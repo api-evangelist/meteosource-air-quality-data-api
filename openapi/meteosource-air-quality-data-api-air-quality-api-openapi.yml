@@ -46,6 +46,12 @@ components:
       description: MeteoSource place identifier.
       schema:
         type: string
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
     Lon:
       name: lon
       in: query
@@ -58,12 +64,6 @@ components:
       description: Latitude in decimal degrees.
       schema:
         type: number
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
   schemas:
     AirQualityResponse:
       type: object

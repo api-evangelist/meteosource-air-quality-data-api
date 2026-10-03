@@ -65,6 +65,18 @@ paths:
                 $ref: '#/components/schemas/PointWeatherResponse'
 components:
   parameters:
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
     Units:
       name: units
       in: query
@@ -77,36 +89,12 @@ components:
         - us
         - uk
         - ca
-    PlaceId:
-      name: place_id
-      in: query
-      description: MeteoSource place identifier.
-      schema:
-        type: string
     Lon:
       name: lon
       in: query
       description: Longitude in decimal degrees.
       schema:
         type: number
-    Sections:
-      name: sections
-      in: query
-      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
-      schema:
-        type: string
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
     Language:
       name: language
       in: query
@@ -121,6 +109,18 @@ components:
         - pl
         - pt
         - cs
+    Sections:
+      name: sections
+      in: query
+      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
+      schema:
+        type: string
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
   schemas:
     PointWeatherResponse:
       type: object
