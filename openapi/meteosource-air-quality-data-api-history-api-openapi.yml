@@ -48,18 +48,6 @@ paths:
                 $ref: '#/components/schemas/TimeMachineResponse'
 components:
   parameters:
-    PlaceId:
-      name: place_id
-      in: query
-      description: MeteoSource place identifier.
-      schema:
-        type: string
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
     Units:
       name: units
       in: query
@@ -72,6 +60,30 @@ components:
         - us
         - uk
         - ca
+    Lon:
+      name: lon
+      in: query
+      description: Longitude in decimal degrees.
+      schema:
+        type: number
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
     Language:
       name: language
       in: query
@@ -86,18 +98,6 @@ components:
         - pl
         - pt
         - cs
-    Lon:
-      name: lon
-      in: query
-      description: Longitude in decimal degrees.
-      schema:
-        type: number
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
   schemas:
     TimeMachineResponse:
       type: object
