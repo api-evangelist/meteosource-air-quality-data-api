@@ -65,6 +65,44 @@ paths:
                 $ref: '#/components/schemas/PointWeatherResponse'
 components:
   parameters:
+    Sections:
+      name: sections
+      in: query
+      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
+      schema:
+        type: string
+    Lat:
+      name: lat
+      in: query
+      description: Latitude in decimal degrees.
+      schema:
+        type: number
+    Language:
+      name: language
+      in: query
+      description: ISO language code.
+      schema:
+        type: string
+        enum:
+        - en
+        - es
+        - fr
+        - de
+        - pl
+        - pt
+        - cs
+    Timezone:
+      name: timezone
+      in: query
+      description: tzinfo timezone identifier.
+      schema:
+        type: string
+    PlaceId:
+      name: place_id
+      in: query
+      description: MeteoSource place identifier.
+      schema:
+        type: string
     Units:
       name: units
       in: query
@@ -83,44 +121,6 @@ components:
       description: Longitude in decimal degrees.
       schema:
         type: number
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
-    Sections:
-      name: sections
-      in: query
-      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
-      schema:
-        type: string
-    PlaceId:
-      name: place_id
-      in: query
-      description: MeteoSource place identifier.
-      schema:
-        type: string
-    Language:
-      name: language
-      in: query
-      description: ISO language code.
-      schema:
-        type: string
-        enum:
-        - en
-        - es
-        - fr
-        - de
-        - pl
-        - pt
-        - cs
   schemas:
     PointWeatherResponse:
       type: object
