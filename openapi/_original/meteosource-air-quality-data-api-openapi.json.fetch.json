@@ -1,0 +1,12 @@
+{
+ "url": "https://www.meteosource.com/api/v1/premium/openapi.json",
+ "final": "https://www.meteosource.com/api/v1/premium/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 94324,
+ "sha256": "22a22f851d3a2a8ef729cb71d6760e7ebea6fc689a7ee225b914daddb489a686",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

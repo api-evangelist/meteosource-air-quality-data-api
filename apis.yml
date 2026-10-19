@@ -41,30 +41,6 @@ created: '2024-11-07'
 modified: '2026-05-19'
 specificationVersion: '0.23'
 apis:
-- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-air-quality-api
-  name: MeteoSource Air Quality Data API Air Quality API
-  description: Air quality and pollution forecasts.
-  humanURL: https://www.meteosource.com/air-quality-api
-  baseURL: https://www.meteosource.com/api/v1
-  tags:
-  - Air Quality
-  properties:
-  - type: OpenAPI
-    url: openapi/meteosource-air-quality-data-api-air-quality-api-openapi.yml
-  - type: Documentation
-    url: https://www.meteosource.com/air-quality-api
-- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-history-api
-  name: MeteoSource Air Quality Data API History API
-  description: Historical Time Machine data.
-  humanURL: https://www.meteosource.com/air-quality-api
-  baseURL: https://www.meteosource.com/api/v1
-  tags:
-  - History
-  properties:
-  - type: OpenAPI
-    url: openapi/meteosource-air-quality-data-api-history-api-openapi.yml
-  - type: Documentation
-    url: https://www.meteosource.com/air-quality-api
 - aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-locations-api
   name: MeteoSource Air Quality Data API Locations API
   description: Location lookup endpoints.
@@ -79,18 +55,6 @@ apis:
     url: openapi/meteosource-air-quality-data-api-locations-api-openapi.yml
   - type: Documentation
     url: https://www.meteosource.com/air-quality-api
-- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-maps-api
-  name: MeteoSource Air Quality Data API Maps API
-  description: Tile-based weather and pollution maps.
-  humanURL: https://www.meteosource.com/air-quality-api
-  baseURL: https://www.meteosource.com/api/v1
-  tags:
-  - Maps
-  properties:
-  - type: OpenAPI
-    url: openapi/meteosource-air-quality-data-api-maps-api-openapi.yml
-  - type: Documentation
-    url: https://www.meteosource.com/air-quality-api
 - aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-weather-api
   name: MeteoSource Air Quality Data API Weather API
   description: Current and forecasted weather endpoints.
@@ -101,6 +65,20 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/meteosource-air-quality-data-api-weather-api-openapi.yml
+  - type: Documentation
+    url: https://www.meteosource.com/air-quality-api
+- aid: meteosource-air-quality-data-api:meteosource-air-quality-data-api-weather-maps-api
+  name: MeteoSource Air Quality Data API Weather maps API
+  description: >-
+    PNG map images of weather variables (e.g. temperature, precipitation, cloud cover) for a given area
+    and time, plus the base map tileset used to render them as an interactive map.
+  humanURL: https://www.meteosource.com/air-quality-api
+  baseURL: https://www.meteosource.com/api/v1
+  tags:
+  - Weather maps
+  properties:
+  - type: OpenAPI
+    url: openapi/meteosource-air-quality-data-api-weather-maps-api-openapi.yml
   - type: Documentation
     url: https://www.meteosource.com/air-quality-api
 common:

@@ -1,166 +1,2606 @@
 openapi: 3.2.0
 info:
-  title: MeteoSource Air Quality Data Weather API
-  description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
-  version: '1.0'
-  contact:
-    name: MeteoSource
-    url: https://www.meteosource.com/
-  license:
-    name: Proprietary
-    url: https://www.meteosource.com/terms-of-service
+  title: Documentation for your Premium plan Weather API
+  description: 'This interactive documentation lets you try real API requests. Select an endpoint on the left and read its description for details about the available parameters. Click `Test Request` to open the interactive API client, fill in the parameters, and press `Send` to view a full API response. You can then inspect the JSON response, copy the `curl` command to run it on your machine, or obtain a URL of the request.
+
+
+    The Meteosource API is a RESTful API. Requests are made with `GET` and query parameters; responses are JSON-encoded, except where noted (e.g. the weather map endpoints return `image/png`).
+
+
+    ### Base URL
+
+    The base URL for this documentation is `https://www.meteosource.com/api/v1/premium`.
+
+
+    ### Authentication
+
+    Requests are authenticated with your unique API key, supplied in one of these ways:
+
+    * the `key` query parameter
+
+    * the `X-API-Key` header
+
+    * the `Authorization: Bearer ` header
+
+
+    Specifying the `key` query parameter together with either header is rejected with a `403` error, as is specifying none of them. If both headers are present, `X-API-Key` takes precedence and `Authorization` is ignored. You can find and manage your API key in your dashboard.
+
+
+    ### Errors
+
+    The API returns standard HTTP status codes. Error responses include a JSON body with a `detail` field describing the problem:
+
+    ```json
+
+    { "detail": "explanation of what went wrong" }
+
+    ```
+
+    Common error codes: `400` (invalid parameter), `402` (daily request limit exceeded), `403` (API key missing, invalid, or specified twice), `429` (per-minute rate limit exceeded).
+
+
+    ### Pagination
+
+    The Meteosource API does not use pagination - all results for a request are returned at once.
+
+
+    ### Important notes
+
+
+    * For a detailed description of the response variables, consult the response `Schema`
+
+    * Don''t assume a fixed set or order of variables and sections - new ones may be added over time. Always check a field is present before using it.
+
+    * The response includes an `Expires` header marking when the data will next change. Use it to avoid unnecessary requests and improve your app''s performance.
+
+    * HTTP compression is supported - add an `Accept-Encoding: gzip` header to enable it.'
+  version: v1
 servers:
-- url: https://www.meteosource.com/api/v1
-  description: Production
-security:
-- apiKeyQuery: []
-- apiKeyHeader: []
+- url: https://www.meteosource.com/api/v1/premium
 tags:
 - name: Weather
-  description: Current and forecasted weather endpoints.
+  description: 'This section contains endpoints for retrieving current, forecast, and historical weather data for a single location.
+
+
+    For every endpoint in this section, location is a required parameter (some endpoints also
+
+    require other parameters, e.g. `date`), and can be specified in one of two ways:
+
+
+    1. GPS coordinates, using the `lat` and `lon` parameters.
+
+    2. **OR** A place name, using the `place_id` parameter. Obtain a `place_id` from one of the endpoints in the Locations section in this API documentation.
+
+
+    ### Notes
+
+    * When daylight saving time starts, one hourly record will be missing (typically `2:00:00 AM`). When daylight saving time ends, the hourly data will contain two records with duplicate times (typically `2:00:00 AM`).
+
+    * For mountains, it is usually better to specify the `place_id` rather than the `lat` and `lon`. When you use `place_id`, you are guaranteed to receive data for the precise elevation of the peak. When you specify the coordinates, the elevation can be less precise.
+
+    * **Weather icon fields** (e.g. `status_num`) return a numeric code; see the `WeatherIconCode` schema description for the full mapping of codes to their icon names and descriptions.'
 paths:
-  /free/point:
+  /point:
     get:
-      summary: Get point weather forecast (free tier)
-      description: Returns weather and forecast data for a point location on the free tier.
-      operationId: getFreePointWeather
       tags:
       - Weather
+      summary: Get weather data
+      description: '## Current weather and forecast for single location
+
+
+        ### Sections
+
+        The endpoint can return multiple sections of data. To obtain the best performance, we advise only requesting the sections you actually need. The available sections are as follows:
+
+
+        * Current weather situation
+
+        * Hourly forecast (for 24/48/96/168 hours, depending on the tier)
+
+        * Daily forecast (for 7/10/30 days, depending on the tier)
+
+        * Minutely precipitation forecast (for 60 minutes in the following hour, only for higher tiers)
+
+        * Weather alerts (only for higher tiers)
+
+
+        By default, only the current and hourly sections are returned. The division into daily parts (morning, afternoon and evening) is only available for the first 7 days of the forecast. For details regarding available parameters, see the parameter description below.
+
+
+        ### Notes
+
+        * Variables can be instantaneous, averaged, or accumulated over certain time. For example, `precipitation` forecast provides the precipitation accumulated until the next hour (data with timestamp as `12:00:00` is rain accumulated from `12:00:00` to `13:00:00`).
+
+        * The detailed description of weather alerts is only available in English. The alert category is translated into selected language.'
+      operationId: point_point_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
       parameters:
-      - $ref: '#/components/parameters/PlaceId'
-      - $ref: '#/components/parameters/Lat'
-      - $ref: '#/components/parameters/Lon'
-      - $ref: '#/components/parameters/Sections'
-      - $ref: '#/components/parameters/Timezone'
-      - $ref: '#/components/parameters/Language'
-      - $ref: '#/components/parameters/Units'
+      - name: place_id
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+        description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+      - name: lat
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+        description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+      - name: lon
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+        description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+      - name: sections
+        in: query
+        required: false
+        schema:
+          type: string
+          description: "Sections to be included in the response. You can specify more section by separating the values with a comma. The available values are:\n\n* ``current``: Current weather situation\n* ``daily``: Forecasts for each whole day, without the daily parts\n* ``daily-parts``: Forecasts for each whole day, morning, afternoon and evening\n    * Important: forecast for the morning, afternoon and evening is available only for the first\n      7 days in the forecast\n* ``hourly``: Forecasts with hourly resolution\n* ``minutely``: Precipitation forecast with 1 minute resolution\n* ``alerts``: The weather alerts\n* ``all``: All sections\n"
+          default: current,hourly
+        description: "Sections to be included in the response. You can specify more section by separating the values with a comma. The available values are:\n\n* ``current``: Current weather situation\n* ``daily``: Forecasts for each whole day, without the daily parts\n* ``daily-parts``: Forecasts for each whole day, morning, afternoon and evening\n    * Important: forecast for the morning, afternoon and evening is available only for the first\n      7 days in the forecast\n* ``hourly``: Forecasts with hourly resolution\n* ``minutely``: Precipitation forecast with 1 minute resolution\n* ``alerts``: The weather alerts\n* ``all``: All sections\n"
+      - name: timezone
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Timezone to be used for the date fields. If not specified, local timezone of the forecast location will be used.
+
+            The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+            Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+            The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+            '
+        description: 'Timezone to be used for the date fields. If not specified, local timezone of the forecast location will be used.
+
+          The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+          Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+          The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+          '
+      - name: language
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - cs
+          - en
+          - de
+          - es
+          - fr
+          - pl
+          - pt
+          x-enumDescriptions:
+            cs: Czech
+            de: German
+            en: English
+            es: Spanish
+            fr: French
+            pl: Polish
+            pt: Portuguese
+          description: The language of text summaries and place names (variable names are never translated).
+          default: en
+        description: The language of text summaries and place names (variable names are never translated).
+      - name: units
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - auto
+          - metric
+          - us
+          - uk
+          - ca
+          x-enumDescriptions:
+            auto: Select the system automatically, based on the forecast location.
+            ca: Same as `metric`, except that wind speeds are in `km/h` and pressure is in `kPa`.
+            metric: Metric (SI) units (`°C`, `mm/h`, `m/s`, `cm`, `km`, `hPa`).
+            uk: Same as `metric`, except that visibility is in `miles` and wind speeds are in `mph`.
+            us: Imperial units (`°F`, `in/h`, `mph`, `in`, `mi`, `Hg`).
+          description: 'Unit system to be used.
+
+            '
+          default: auto
+        description: 'Unit system to be used.
+
+          '
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
       responses:
         '200':
-          description: Weather forecast response.
+          description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PointWeatherResponse'
-  /flexi/point:
-    get:
-      summary: Get point weather forecast (flexi tier)
-      description: Returns weather and forecast data for a point location on the flexi tier.
-      operationId: getFlexiPointWeather
-      tags:
-      - Weather
-      parameters:
-      - $ref: '#/components/parameters/PlaceId'
-      - $ref: '#/components/parameters/Lat'
-      - $ref: '#/components/parameters/Lon'
-      - $ref: '#/components/parameters/Sections'
-      - $ref: '#/components/parameters/Timezone'
-      - $ref: '#/components/parameters/Language'
-      - $ref: '#/components/parameters/Units'
-      responses:
-        '200':
-          description: Weather forecast response.
+                anyOf:
+                - $ref: '#/components/schemas/Point_PointData'
+                - type: 'null'
+        '400':
+          description: Error in passed parameter.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PointWeatherResponse'
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /air_quality:
+    get:
+      tags:
+      - Weather
+      summary: Get air quality data
+      description: Get air quality forecast for a single location (specified either by geographic coordinates or by a place ID).
+      operationId: air_quality_air_quality_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
+      parameters:
+      - name: place_id
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+        description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+      - name: lat
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+        description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+      - name: lon
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+        description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+      - name: timezone
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Timezone to be used for the date fields. If not specified, local timezone of the forecast location will be used.
+
+            The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+            Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+            The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+            '
+        description: 'Timezone to be used for the date fields. If not specified, local timezone of the forecast location will be used.
+
+          The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+          Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+          The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+          '
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AirQuality_PointData'
+                - type: 'null'
+        '400':
+          description: Error in passed parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /time_machine:
+    get:
+      tags:
+      - Weather
+      summary: Get historical weather data
+      description: 'Get weather data for a single location (specified either by geographic coordinates or by a place ID) and a given day in the past.
+
+
+        ### Sections
+
+        The response is split into following sections:
+
+
+        * `data`: Actual hourly weather records for the requested day, available up to 20 years in the past.
+
+        * `daily`: Daily summary (average, minimum, and maximum) computed from that same day''s hourly records in `data`.
+
+        * `statistics`: Long-term climate normals for this calendar day (e.g. every August 14th, regardless of year) - typical averages plus all-time record extremes, computed from around 40 years of historical data.'
+      operationId: time_machine_time_machine_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
+      parameters:
+      - name: place_id
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+        description: Identifier of a place. To obtain the `place_id` for the location you want, please use endpoints `/find_places_prefix` (search by prefix) or `/find_places` (search by full name).
+      - name: lat
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+        description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+      - name: lon
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+        description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+          description: 'The day of the data in the past. Specify in `YYYY-MM-DD` format, e.g. `2021-08-24`.
+
+            '
+        description: 'The day of the data in the past. Specify in `YYYY-MM-DD` format, e.g. `2021-08-24`.
+
+          '
+      - name: timezone
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Timezone to be used for the date fields. If not specified, local timezone of the location will be used.
+
+            The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+            Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+            The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+            '
+        description: 'Timezone to be used for the date fields. If not specified, local timezone of the location will be used.
+
+          The format is according to the tzinfo database, so values like `Europe/Prague` or `UTC` can be used.
+
+          Alternatively you may use the value ``auto`` in which case the local timezone of the location is used.
+
+          The full list of valid timezone strings can be found [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+          '
+      - name: units
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - auto
+          - metric
+          - us
+          - uk
+          - ca
+          x-enumDescriptions:
+            auto: Select the system automatically, based on the forecast location.
+            ca: Same as `metric`, except that wind speeds are in `km/h` and pressure is in `kPa`.
+            metric: Metric (SI) units (`°C`, `mm/h`, `m/s`, `cm`, `km`, `hPa`).
+            uk: Same as `metric`, except that visibility is in `miles` and wind speeds are in `mph`.
+            us: Imperial units (`°F`, `in/h`, `mph`, `in`, `mi`, `Hg`).
+          description: 'Unit system to be used.
+
+            '
+          default: auto
+        description: 'Unit system to be used.
+
+          '
+      - name: language
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - cs
+          - en
+          - de
+          - es
+          - fr
+          - pl
+          - pt
+          x-enumDescriptions:
+            cs: Czech
+            de: German
+            en: English
+            es: Spanish
+            fr: French
+            pl: Polish
+            pt: Portuguese
+          description: 'The language of weather summaries (variable names are never translated).
+
+            '
+          default: en
+        description: 'The language of weather summaries (variable names are never translated).
+
+          '
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/TimeMachine_TimeMachine'
+                - type: 'null'
+        '400':
+          description: Error in passed parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
-  parameters:
-    Sections:
-      name: sections
-      in: query
-      description: Comma-separated forecast sections (current, daily, daily-parts, hourly, minutely, alerts, all).
-      schema:
-        type: string
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
-    Language:
-      name: language
-      in: query
-      description: ISO language code.
-      schema:
-        type: string
-        enum:
-        - en
-        - es
-        - fr
-        - de
-        - pl
-        - pt
-        - cs
-    Timezone:
-      name: timezone
-      in: query
-      description: tzinfo timezone identifier.
-      schema:
-        type: string
-    PlaceId:
-      name: place_id
-      in: query
-      description: MeteoSource place identifier.
-      schema:
-        type: string
-    Units:
-      name: units
-      in: query
-      description: Unit system for the response.
-      schema:
-        type: string
-        enum:
-        - auto
-        - metric
-        - us
-        - uk
-        - ca
-    Lon:
-      name: lon
-      in: query
-      description: Longitude in decimal degrees.
-      schema:
-        type: number
   schemas:
-    PointWeatherResponse:
+    Point_PointHourlyProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Unit: mm/h'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C.
+
+            Unit: \%'
       type: object
+      title: Point_PointHourlyProbData
+    Point_PointCurrentData:
+      properties:
+        icon:
+          type: string
+          description: String identifier of current weather icon, e.g. `light_rain`.
+        icon_num:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Numeric identifier of current weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        summary:
+          type: string
+          description: Short text summary of current weather, e.g. `Light rain`.
+        temperature:
+          type: number
+          description: 'Current temperature 2 metres above ground.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Feels like temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Windchill temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Ground (surface) temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Current dew point temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointCurrentWindData'
+          - type: 'null'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointCurrentPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointCurrentProbData'
+          - type: 'null'
+        cloud_cover:
+          type: number
+          description: 'Percentage of sky covered by clouds.
+
+            Unit: \%'
+        cape:
+          type: number
+          description: 'Convective available potential energy.
+
+            Unit: J/kg'
+        evaporation:
+          type: number
+          description: 'Evaporation of liquid water into water vapor.
+
+            Unit: mm/h'
+        lftx:
+          type: number
+          description: 'Surface lifted index.
+
+            Unit: K'
+        snow_depth:
+          type: number
+          description: 'Snow depth.
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        sunshine_duration:
+          type: number
+          description: 'Sunshine duration since start of previous hour.
+
+            Unit: s'
+        irradiance:
+          type: number
+          description: 'Global downward short-wave radiation flux.
+
+            Unit: W/m2'
+        ozone:
+          type: number
+          description: 'Total column of ozone.
+
+            Unit: Dobson'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level.
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        uv_index:
+          type: number
+          description: 'UV index, values from zero (low risk of harm) to 11+ (extreme risk of harm).
+
+            Unit: uv_index'
+        humidity:
+          type: integer
+          description: 'Relative humidity.
+
+            Unit: \%'
+        visibility:
+          type: number
+          description: 'Visibility.
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointCurrentData
+    TimeMachine_PointDailyStatsWindData:
+      properties:
+        avg_speed:
+          type: number
+          description: 'Long-term average wind speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        avg_angle:
+          type: number
+          description: 'Long-term average wind angle.
+
+            Unit: deg'
+        avg_dir:
+          type: string
+          description: 'Long-term average wind direction in ''N'', ''NNE'', ''NE'', ... ''NNW'' format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        max_speed:
+          type: number
+          description: 'Historical daily maximum wind speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        max_gust:
+          type: number
+          description: 'Historical daily maximum wind gust speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+      type: object
+      title: TimeMachine_PointDailyStatsWindData
+    AirQuality_PointData:
       properties:
         lat:
           type: string
+          description: Latitude of the point, always in the format <float><N/S>, for example ``23.5S``
         lon:
           type: string
+          description: Longitude of the point, always in the format <float><E/W>, for example ``23.5W``
         elevation:
-          type: number
+          type: integer
+          description: Elevation above sea level in metres (for units 'metric', 'uk', 'ca') or feet (for units 'us')
         timezone:
           type: string
+          description: Name of the timezone in format like 'Europe/London'.
+        data:
+          items:
+            $ref: '#/components/schemas/AirQuality_PointHourlyData'
+          type: array
+      type: object
+      title: AirQuality_PointData
+    Point_PointCurrentProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Storm probability.
+
+            Unit: \%'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C.
+
+            Unit: \%'
+      type: object
+      title: Point_PointCurrentProbData
+    Point_PointDailyEveningWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed. (evening max)
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'Evening wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: 'Evening wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+      type: object
+      title: Point_PointDailyEveningWindData
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+      type: object
+      title: HTTPValidationError
+    TimeMachine_PointDailyStatsData:
+      properties:
+        temperature:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_PointDailyStatsTemperatureData'
+          - type: 'null'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_PointDailyStatsWindData'
+          - type: 'null'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_PointDailyStatsPrecipitationData'
+          - type: 'null'
+      type: object
+      title: TimeMachine_PointDailyStatsData
+    Point_PointDailyMorningCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Percentage of sky covered by clouds. (morning avg)
+
+            Unit: \%'
+        low:
+          type: number
+          description: 'Unit: %'
+        middle:
+          type: number
+          description: 'Unit: %'
+        high:
+          type: number
+          description: 'Unit: %'
+      type: object
+      title: Point_PointDailyMorningCloudCoverData
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+        msg:
+          type: string
+        type:
+          type: string
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TimeMachine_TimeMachineCloudCoverData:
+      properties:
+        total:
+          type: integer
+          description: 'Percentage of sky covered by clouds.
+
+            Unit: %'
+        low:
+          type: integer
+          description: 'Percentage of sky covered by low clouds.
+
+            Unit: %'
+        middle:
+          type: integer
+          description: 'Percentage of sky covered by middle clouds.
+
+            Unit: %'
+        high:
+          type: integer
+          description: 'Percentage of sky covered by high clouds.
+
+            Unit: %'
+      type: object
+      title: TimeMachine_TimeMachineCloudCoverData
+    TimeMachine_TimeMachinePrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+      type: object
+      title: TimeMachine_TimeMachinePrecipitationData
+    Point_PointDailyAllDayCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Percentage of sky covered by clouds. (allday avg)
+
+            Unit: \%'
+        low:
+          type: number
+          description: 'Unit: %'
+        middle:
+          type: number
+          description: 'Unit: %'
+        high:
+          type: number
+          description: 'Unit: %'
+      type: object
+      title: Point_PointDailyAllDayCloudCoverData
+    Point_PointData:
+      properties:
+        lat:
+          type: string
+          description: Latitude of the point, always in the format <float><N/S>, for example ``23.5S``
+        lon:
+          type: string
+          description: Longitude of the point, always in the format <float><E/W>, for example ``23.5W``
+        elevation:
+          type: integer
+          description: Elevation above sea level in metres (for units 'metric', 'uk', 'ca') or feet (for units 'us')
+        timezone:
+          type: string
+          description: Name of the timezone in format like 'Europe/London'.
         units:
           type: string
+          description: Unit system (metric, uk, ca or us)
         current:
-          type: object
-        hourly:
-          type: object
-          properties:
-            data:
-              type: array
-              items:
-                type: object
-        daily:
-          type: object
-          properties:
-            data:
-              type: array
-              items:
-                type: object
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointCurrentData'
+          - type: 'null'
         minutely:
-          type: object
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointMinutely'
+          - type: 'null'
+        hourly:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointHourly'
+          - type: 'null'
+        daily:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDaily'
+          - type: 'null'
         alerts:
-          type: object
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointAlerts'
+          - type: 'null'
+      type: object
+      title: Point_PointData
+    Point_PointDailyMorningPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour. (morning sum)
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+      type: object
+      title: Point_PointDailyMorningPrecipitationData
+    Point_PointDailyEveningData:
+      properties:
+        weather:
+          type: string
+          description: Evening day string identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Evening numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        temperature:
+          type: number
+          description: 'Temperature 2 metres above ground. (evening avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Temperature 2 metres above ground. (evening avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyEveningWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyEveningCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level. (evening avg)
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyEveningPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyEveningProbData'
+          - type: 'null'
+        ozone:
+          type: number
+          description: 'Total column of ozone. (evening avg)
+
+            Unit: Dobson'
+        humidity:
+          type: integer
+          description: 'Relative humidity. (evening avg)
+
+            Unit: \%'
+        snow_depth:
+          type: number
+          description: 'Snow depth. (evening avg)
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        visibility:
+          type: number
+          description: 'Visibility. (evening avg)
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointDailyEveningData
+    Point_PointMinutely:
+      properties:
+        summary:
+          type: string
+          description: 'Text summary about upcoming precipitation.
+
+            Unit: summary'
+        data:
+          items:
+            $ref: '#/components/schemas/Point_PointMinutelyPrecipitationData'
+          type: array
+      type: object
+      title: Point_PointMinutely
+    Alert:
+      properties:
+        event:
+          type: string
+          description: Type of the alert (e.g. `Thunderstorm Warning`), translated into the selected language.
+        onset:
+          type: string
+          description: Start of the alert's validity, as a local ISO 8601 datetime.
+        expires:
+          type: string
+          description: End of the alert's validity, as a local ISO 8601 datetime.
+        sender:
+          type: string
+          description: Name of the issuing authority.
+        certainty:
+          type: string
+          description: One of `Observed`, `Likely`, `Possible`, `Unlikely`.
+        severity:
+          type: string
+          description: One of `Extreme`, `Severe`, `Moderate`, `Minor`.
+        headline:
+          type: string
+          description: Short headline of the alert. Only available in English.
+        description:
+          type: string
+          description: Full description of the alert. Only available in English.
+      type: object
+      title: Alert
+    Point_PointDailyAfternoonWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed. (afternoon max)
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'Afternoon wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: 'Afternoon wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+      type: object
+      title: Point_PointDailyAfternoonWindData
+    TimeMachine_TimeMachineDailyData:
+      properties:
+        temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        temperature_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        temperature_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineDailyWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineDailyCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineDailyPrecipitationData'
+          - type: 'null'
+        humidity:
+          type: number
+          description: 'Unit: \%'
+      type: object
+      title: TimeMachine_TimeMachineDailyData
+    Point_PointDailyStatsPrecipitationData:
+      properties:
+        avg:
+          type: number
+          description: 'Long-term average daily precipitation amount.
+
+            Units: metric = mm/day, us = inches per day, uk = mm/day, ca = mm/day'
+        probability:
+          type: integer
+          description: 'Long-term average precipitation probability.
+
+            Unit: \%'
+      type: object
+      title: Point_PointDailyStatsPrecipitationData
+    Point_PointDailyStatsTemperatureData:
+      properties:
+        avg:
+          type: number
+          description: 'Long-term temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        avg_min:
+          type: number
+          description: 'Long-term daily minimum temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        avg_max:
+          type: number
+          description: 'Long-term daily maximum temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        record_min:
+          type: number
+          description: 'Historical daily minimum temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        record_max:
+          type: number
+          description: 'Historical daily maximum.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+      type: object
+      title: Point_PointDailyStatsTemperatureData
+    TimeMachine_TimeMachine:
+      properties:
+        lat:
+          type: string
+          description: Latitude of the point, always in the format <float><N/S>, for example ``23.5S``
+        lon:
+          type: string
+          description: Longitude of the point, always in the format <float><E/W>, for example ``23.5W``
+        elevation:
+          type: integer
+          description: Elevation above sea level in metres (for units 'metric', 'uk', 'ca') or feet (for units 'us')
+        timezone:
+          type: string
+          description: Name of the timezone in format like 'Europe/London'.
+        units:
+          type: string
+          description: Unit system (metric, uk, ca or us)
+        data:
+          items:
+            $ref: '#/components/schemas/TimeMachine_TimeMachineHourlyData'
+          type: array
+        daily:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineDailyData'
+          - type: 'null'
+        statistics:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_PointDailyStatsData'
+          - type: 'null'
+      type: object
+      title: TimeMachine_TimeMachine
+    Point_PointDailyStatsData:
+      properties:
+        temperature:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyStatsTemperatureData'
+          - type: 'null'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyStatsWindData'
+          - type: 'null'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyStatsPrecipitationData'
+          - type: 'null'
+      type: object
+      title: Point_PointDailyStatsData
+    TimeMachine_TimeMachineDailyCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Unit: %'
+        low:
+          type: number
+          description: 'Unit: %'
+        middle:
+          type: number
+          description: 'Unit: %'
+        high:
+          type: number
+          description: 'Unit: %'
+      type: object
+      title: TimeMachine_TimeMachineDailyCloudCoverData
+    Point_PointDailyAfternoonData:
+      properties:
+        weather:
+          type: string
+          description: Afternoon day string identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Afternoon numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        temperature:
+          type: number
+          description: 'Temperature 2 metres above ground. (afternoon avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Temperature 2 metres above ground. (afternoon avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAfternoonWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAfternoonCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level. (afternoon avg)
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAfternoonPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAfternoonProbData'
+          - type: 'null'
+        ozone:
+          type: number
+          description: 'Total column of ozone. (afternoon avg)
+
+            Unit: Dobson'
+        humidity:
+          type: integer
+          description: 'Relative humidity. (afternoon avg)
+
+            Unit: \%'
+        snow_depth:
+          type: number
+          description: 'Snow depth. (afternoon avg)
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        visibility:
+          type: number
+          description: 'Visibility. (afternoon avg)
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointDailyAfternoonData
+    Point_PointDailyData:
+      properties:
+        day:
+          type: string
+          description: Datetime in YYYY-MM-DDTHH:MM:SS format.
+        weather:
+          type: string
+          description: All day string identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        summary:
+          type: string
+          description: Short text summary of the weather, e.g. `Light rain`.
+        predictability:
+          type: integer
+          description: 'Weather predictability. Values from 1 (very high predictability) to 5 (very low predictability).
+
+            Unit: 1-5'
+        all_day:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAllDayData'
+          - type: 'null'
+        morning:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMorningData'
+          - type: 'null'
+        afternoon:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAfternoonData'
+          - type: 'null'
+        evening:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyEveningData'
+          - type: 'null'
+        astro:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAstroData'
+          - type: 'null'
+        statistics:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyStatsData'
+          - type: 'null'
+      type: object
+      title: Point_PointDailyData
+    Point_PointDailyAllDayPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour. (allday sum)
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+      type: object
+      title: Point_PointDailyAllDayPrecipitationData
+    Point_PointHourly:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Point_PointHourlyData'
+          type: array
+      type: object
+      title: Point_PointHourly
+    Point_PointDaily:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Point_PointDailyData'
+          type: array
+      type: object
+      title: Point_PointDaily
+    Point_PointDailyMoonData:
+      properties:
+        phase:
+          type: string
+          description: Name of the moon phase, one of 'new_moon', 'first_quarter', 'full_moon', 'last_quarter'.
+        rise:
+          type: string
+          format: date-time
+          description: Datetime of the moonrise or null if the moon does not rise on given day.
+          example: '2022-03-30T18:00:00'
+        set:
+          type: string
+          format: date-time
+          description: Datetime of the moonset or null if the moon does not set on given day.
+          example: '2022-03-30T18:00:00'
+        always_up:
+          type: boolean
+          description: True if the moon never sets on given day, false otherwise.
+        always_down:
+          type: boolean
+          description: True if the moon never rises on given day, false otherwise.
+      type: object
+      title: Point_PointDailyMoonData
+    Point_PointDailyMorningData:
+      properties:
+        weather:
+          type: string
+          description: Morning day string identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Morning numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        temperature:
+          type: number
+          description: 'Temperature 2 metres above ground. (morning avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Temperature 2 metres above ground. (morning avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMorningWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMorningCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level. (morning avg)
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMorningPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMorningProbData'
+          - type: 'null'
+        ozone:
+          type: number
+          description: 'Total column of ozone. (morning avg)
+
+            Unit: Dobson'
+        humidity:
+          type: integer
+          description: 'Relative humidity. (morning avg)
+
+            Unit: \%'
+        snow_depth:
+          type: number
+          description: 'Snow depth. (morning avg)
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        visibility:
+          type: number
+          description: 'Visibility. (morning avg)
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointDailyMorningData
+    TimeMachine_TimeMachineHourlyData:
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Datetime in YYYY-MM-DDTHH:MM:SS format.
+          example: '2022-03-30T18:00:00'
+        weather:
+          type: string
+          description: String identifier of the weather icon, e.g. `light_rain`.
+        summary:
+          type: string
+          description: Short text summary of the weather, e.g. `Light rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Feels like temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Windchill temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Dew point temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachineCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level.
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/TimeMachine_TimeMachinePrecipitationData'
+          - type: 'null'
+        cape:
+          type: integer
+          description: 'Convective available potential energy.
+
+            Unit: J/kg'
+        evaporation:
+          type: integer
+          description: 'Evaporation of liquid water into water vapor.
+
+            Unit: mm/h'
+        irradiance:
+          type: integer
+          description: 'Global downward short-wave radiation flux.
+
+            Unit: W/m2'
+        ozone:
+          type: integer
+          description: 'Total column of ozone.
+
+            Unit: Dobson'
+        humidity:
+          type: integer
+          description: 'Relative humidity.
+
+            Unit: \%'
+      type: object
+      title: TimeMachine_TimeMachineHourlyData
+    Point_PointDailyEveningCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Percentage of sky covered by clouds. (evening avg)
+
+            Unit: \%'
+        low:
+          type: number
+          description: 'Unit: %'
+        middle:
+          type: number
+          description: 'Unit: %'
+        high:
+          type: number
+          description: 'Unit: %'
+      type: object
+      title: Point_PointDailyEveningCloudCoverData
+    TimeMachine_TimeMachineDailyWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'All day wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: ''
+      type: object
+      title: TimeMachine_TimeMachineDailyWindData
+    Point_PointDailyEveningProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Unit: mm/h'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C. (evening avg)
+
+            Unit: %'
+      type: object
+      title: Point_PointDailyEveningProbData
+    Point_PointDailyEveningPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour. (evening sum)
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+      type: object
+      title: Point_PointDailyEveningPrecipitationData
+    Point_PointDailyAllDayWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed. (allday max)
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'All day wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: 'All day wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+      type: object
+      title: Point_PointDailyAllDayWindData
+    Point_PointHourlyData:
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Datetime in YYYY-MM-DDTHH:MM:SS format.
+          example: '2022-03-30T18:00:00'
+        weather:
+          type: string
+          description: String identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        summary:
+          type: string
+          description: Short text summary of the weather, e.g. `Light rain`.
+        temperature:
+          type: number
+          description: 'Temperature 2 metres above ground.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Feels like temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Windchill temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Dew point temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointHourlyWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointHourlyCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level.
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointHourlyPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointHourlyProbData'
+          - type: 'null'
+        cape:
+          type: number
+          description: 'Convective available potential energy.
+
+            Unit: J/kg'
+        evaporation:
+          type: number
+          description: 'Evaporation of liquid water into water vapor.
+
+            Unit: mm/h'
+        irradiance:
+          type: number
+          description: 'Global downward short-wave radiation flux.
+
+            Unit: W/m2'
+        lftx:
+          type: number
+          description: 'Surface lifted index.
+
+            Unit: K'
+        ozone:
+          type: number
+          description: 'Total column of ozone.
+
+            Unit: Dobson'
+        uv_index:
+          type: number
+          description: 'UV index, values from zero (low risk of harm) to 11+ (extreme risk of harm).
+
+            Unit: uv_index'
+        humidity:
+          type: integer
+          description: 'Relative humidity.
+
+            Unit: \%'
+        snow_depth:
+          type: number
+          description: 'Snow depth.
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        sunshine_duration:
+          type: number
+          description: 'Sunshine duration since start of previous hour.
+
+            Unit: s'
+        visibility:
+          type: number
+          description: 'Visibility.
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointHourlyData
+    AirQuality_PointHourlyData:
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Datetime in YYYY-MM-DDTHH:MM:SS format.
+          example: '2022-03-30T18:00:00'
+        aerosol_550:
+          type: number
+          description: 'Total aerosol optical depth at 550 nm.
+
+            Unit: dimensionless'
+        air_quality:
+          type: number
+          description: 'Air quality index. The following values can appear:
+
+
+            * 1 - Very good
+
+            * 2 - Good
+
+            * 3 - Medium
+
+            * 4 - Poor
+
+            * 5 - Very poor
+
+            * 6 - Extremely poor
+
+
+            Unit: index'
+        co_surface:
+          type: number
+          description: 'Carbon monoxide at surface level.
+
+            Unit: µg/m3'
+        dust_550nm:
+          type: number
+          description: 'Dust aerosol optical depth at 550 nm.
+
+            Unit: dimensionless'
+        dust_mixing_ratio_05:
+          type: number
+          description: 'Dust aerosol (0.55 - 0.9 µm) mixing ratio.
+
+            Unit: kg/kg'
+        no2_surface:
+          type: number
+          description: 'Nitrogen dioxide at surface level.
+
+            Unit: µg/m3'
+        no_surface:
+          type: number
+          description: 'Nitrogen monoxide at surface level.
+
+            Unit: µg/m3'
+        ozone_surface:
+          type: number
+          description: 'Ozone.
+
+            Unit: µg/m3'
+        ozone_total:
+          type: number
+          description: 'Total column ozone.
+
+            Unit: Dobson'
+        pm10:
+          type: number
+          description: 'Particulate matter d < 10 µm (PM10).
+
+            Unit: µg/m3'
+        pm25:
+          type: number
+          description: 'Particulate matter d < 2.5 µm (PM2.5).
+
+            Unit: µg/m3'
+        so2_surface:
+          type: number
+          description: 'Sulphur dioxide at surface level.
+
+            Unit: µg/m3'
+      type: object
+      title: AirQuality_PointHourlyData
+    Point_PointHourlyPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+        convective:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        rainspot:
+          type: string
+          description: 'Precipitation in the surrounding of queried location. The data is 7x7 ASCII art string, queried location being in the center. Character `#` means there is precipitation, `.` means no precipitation. The distance between neighboring cells is 0.25°.
+
+            Unit: rainspot'
+      type: object
+      title: Point_PointHourlyPrecipitationData
+    Point_PointCurrentWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Wind speed 10 metres above the ground.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        angle:
+          type: number
+          description: 'Wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+        dir:
+          type: string
+          description: 'Wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+      type: object
+      title: Point_PointCurrentWindData
+    Point_PointDailyAllDayData:
+      properties:
+        weather:
+          type: string
+          description: All day string identifier of the weather icon, e.g. `light_rain`.
+        icon:
+          $ref: '#/components/schemas/WeatherIconCode'
+          description: Numeric identifier of the weather icon. See the [`WeatherIconCode`](#models/WeatherIconCode) schema description for the full list of possible values.
+        temperature:
+          type: number
+          description: 'Temperature 2 metres above ground. (allday avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        temperature_min:
+          type: number
+          description: 'Temperature 2 metres above ground. (allday min)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        temperature_max:
+          type: number
+          description: 'Temperature 2 metres above ground. (allday max)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like_min:
+          type: number
+          description: 'Feels like temperature. (allday min)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        feels_like_max:
+          type: number
+          description: 'Feels like temperature. (allday max)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature_min:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        soil_temperature_max:
+          type: number
+          description: 'Soil temperature, corresponding to the temperature approximately 5 cm below the ground surface.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill:
+          type: number
+          description: 'Temperature 2 metres above ground. (allday avg)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill_min:
+          type: number
+          description: 'Windchill temperature. (allday min)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind_chill_max:
+          type: number
+          description: 'Windchill temperature. (allday max)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point_min:
+          type: number
+          description: 'Dew point temperature. (allday min)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        dew_point_max:
+          type: number
+          description: 'Dew point temperature. (allday max)
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature_min:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        surface_temperature_max:
+          type: number
+          description: 'Units: metric = °C, us = °F, uk = °C, ca = °C'
+        wind:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAllDayWindData'
+          - type: 'null'
+        cloud_cover:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAllDayCloudCoverData'
+          - type: 'null'
+        pressure:
+          type: number
+          description: 'Atmospheric pressure at mean sea level. (allday avg)
+
+            Units: metric = hPa, us = Hg, uk = hPa, ca = kPa'
+        precipitation:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAllDayPrecipitationData'
+          - type: 'null'
+        probability:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyAllDayProbData'
+          - type: 'null'
+        ozone:
+          type: number
+          description: 'Total column of ozone. (allday avg)
+
+            Unit: Dobson'
+        humidity:
+          type: integer
+          description: 'Relative humidity. (allday avg)
+
+            Unit: \%'
+        snow_depth:
+          type: number
+          description: 'Snow depth. (allday avg)
+
+            Units: metric = cm, us = inch, uk = cm, ca = cm'
+        visibility:
+          type: number
+          description: 'Visibility. (allday avg)
+
+            Units: metric = km, us = mi, uk = mi, ca = km'
+      type: object
+      title: Point_PointDailyAllDayData
+    Point_PointDailyAfternoonProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Unit: mm/h'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C. (afternoon avg)
+
+            Unit: %'
+      type: object
+      title: Point_PointDailyAfternoonProbData
+    WeatherIconCode:
+      type: integer
+      title: WeatherIconCode
+      description: 'Numeric identifier of the weather icon. The following values can appear:
+
+
+        * <span class="icon-1">1 - `not_available` - Not available</span>
+
+        * <span class="icon-2">2 - `sunny` - Sunny</span>
+
+        * <span class="icon-3">3 - `mostly_sunny` - Mostly sunny</span>
+
+        * <span class="icon-4">4 - `partly_sunny` - Partly sunny</span>
+
+        * <span class="icon-5">5 - `mostly_cloudy` - Mostly cloudy</span>
+
+        * <span class="icon-6">6 - `cloudy` - Cloudy</span>
+
+        * <span class="icon-7">7 - `overcast` - Overcast</span>
+
+        * <span class="icon-8">8 - `overcast_w_low_clds` - Overcast with low clouds</span>
+
+        * <span class="icon-9">9 - `fog` - Fog</span>
+
+        * <span class="icon-10">10 - `light_rain` - Light rain</span>
+
+        * <span class="icon-11">11 - `rain` - Rain</span>
+
+        * <span class="icon-12">12 - `psbl_rain` - Possible rain</span>
+
+        * <span class="icon-13">13 - `rain_shower` - Rain shower</span>
+
+        * <span class="icon-14">14 - `tstorm` - Thunderstorm</span>
+
+        * <span class="icon-15">15 - `tstorm_shower` - Local thunderstorms</span>
+
+        * <span class="icon-16">16 - `light_snow` - Light snow</span>
+
+        * <span class="icon-17">17 - `snow` - Snow</span>
+
+        * <span class="icon-18">18 - `psbl_snow` - Possible snow</span>
+
+        * <span class="icon-19">19 - `snow_shower` - Snow shower</span>
+
+        * <span class="icon-20">20 - `rain_and_snow` - Rain and snow</span>
+
+        * <span class="icon-21">21 - `psbl_rain_and_snow` - Possible rain and snow</span>
+
+        * <span class="icon-22">22 - `rain_and_snow` - Rain and snow</span>
+
+        * <span class="icon-23">23 - `fr_rain` - Freezing rain</span>
+
+        * <span class="icon-24">24 - `psbl_fr_rain` - Possible freezing rain</span>
+
+        * <span class="icon-25">25 - `hail` - Hail</span>
+
+        * <span class="icon-26">26 - `clear` - Clear (night)</span>
+
+        * <span class="icon-27">27 - `mostly_clear` - Mostly clear (night)</span>
+
+        * <span class="icon-28">28 - `partly_clear` - Partly clear (night)</span>
+
+        * <span class="icon-29">29 - `mostly_cloudy` - Mostly cloudy (night)</span>
+
+        * <span class="icon-30">30 - `cloudy` - Cloudy (night)</span>
+
+        * <span class="icon-31">31 - `overcast_w_low_clds` - Overcast with low clouds (night)</span>
+
+        * <span class="icon-32">32 - `rain_shower` - Rain shower (night)</span>
+
+        * <span class="icon-33">33 - `tstorm_shower` - Local thunderstorms (night)</span>
+
+        * <span class="icon-34">34 - `snow_shower` - Snow shower (night)</span>
+
+        * <span class="icon-35">35 - `rain_and_snow` - Rain and snow (night)</span>
+
+        * <span class="icon-36">36 - `psbl_fr_rain` - Possible freezing rain (night)</span>
+
+
+        You can [download our set of icons](https://meteosource.com/static/img/weather_icons.zip)'
+    Point_PointDailyAstroData:
+      properties:
+        sun:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailySunData'
+          - type: 'null'
+        moon:
+          anyOf:
+          - $ref: '#/components/schemas/Point_PointDailyMoonData'
+          - type: 'null'
+      type: object
+      title: Point_PointDailyAstroData
+    GeneralRequestError:
+      properties:
+        detail:
+          type: string
+      type: object
+      required:
+      - detail
+      title: GeneralRequestError
+    TimeMachine_PointDailyStatsPrecipitationData:
+      properties:
+        avg:
+          type: number
+          description: 'Long-term average daily precipitation amount.
+
+            Units: metric = mm/day, us = inches per day, uk = mm/day, ca = mm/day'
+        probability:
+          type: integer
+          description: 'Long-term average precipitation probability.
+
+            Unit: \%'
+      type: object
+      title: TimeMachine_PointDailyStatsPrecipitationData
+    Point_PointHourlyCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Percentage of the sky covered by clouds (total).
+
+            Unit: \%'
+        low:
+          type: number
+          description: 'Percentage of sky covered by low clouds.
+
+            Unit: \%'
+        middle:
+          type: number
+          description: 'Percentage of sky covered by middle clouds.
+
+            Unit: \%'
+        high:
+          type: number
+          description: 'Percentage of sky covered by high clouds.
+
+            Unit: \%'
+      type: object
+      title: Point_PointHourlyCloudCoverData
+    Point_PointDailyAfternoonPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour. (afternoon sum)
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+      type: object
+      title: Point_PointDailyAfternoonPrecipitationData
+    Point_PointDailyAfternoonCloudCoverData:
+      properties:
+        total:
+          type: number
+          description: 'Percentage of sky covered by clouds. (afternoon avg)
+
+            Unit: \%'
+        low:
+          type: number
+          description: 'Unit: %'
+        middle:
+          type: number
+          description: 'Unit: %'
+        high:
+          type: number
+          description: 'Unit: %'
+      type: object
+      title: Point_PointDailyAfternoonCloudCoverData
+    Point_PointCurrentPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Current amount of precipitation.
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: 'Precipitation type, may be one of:
+
+
+            * `none`, it there is no precipitation
+
+            * `rain`
+
+            * `snow`
+
+            * `rain_snow`
+
+            * `ice pellets`
+
+            * `frozen rain`
+
+
+            Unit: precipitation type'
+        convective:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        rainspot:
+          type: string
+          description: 'Precipitation in the surrounding of queried location. The data is 7x7 ASCII art string, queried location being in the center. Character `#` means there is precipitation, `.` means no precipitation. The distance between neighboring cells is 0.25°.
+
+            Unit: rainspot'
+      type: object
+      title: Point_PointCurrentPrecipitationData
+    Point_PointDailySunData:
+      properties:
+        rise:
+          type: string
+          format: date-time
+          description: Datetime of the sunrise or null during polar day/night.
+          example: '2022-03-30T18:00:00'
+        set:
+          type: string
+          format: date-time
+          description: Datetime of the sunset or null during polar day/night.
+          example: '2022-03-30T18:00:00'
+        always_up:
+          type: boolean
+          description: True if the sun never sets on given day (polar day), false otherwise.
+        always_down:
+          type: boolean
+          description: True if the sun never rises on given day (polar night), false otherwise.
+      type: object
+      title: Point_PointDailySunData
+    Point_PointHourlyWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Wind speed at 10 metres above ground.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'Wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: 'Wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+      type: object
+      title: Point_PointHourlyWindData
+    Point_PointAlerts:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Alert'
+          type: array
+          description: 'Array of active weather alerts for the location, sorted by severity.
+
+            An empty array means there are no active alerts for the location.
+
+            '
+      type: object
+      title: Point_PointAlerts
+    Point_PointDailyMorningProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Unit: mm/h'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C. (morning avg)
+
+            Unit: %'
+      type: object
+      title: Point_PointDailyMorningProbData
+    TimeMachine_PointDailyStatsTemperatureData:
+      properties:
+        avg:
+          type: number
+          description: 'Long-term temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        avg_min:
+          type: number
+          description: 'Long-term daily minimum temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        avg_max:
+          type: number
+          description: 'Long-term daily maximum temperature average.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        record_min:
+          type: number
+          description: 'Historical daily minimum temperature.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+        record_max:
+          type: number
+          description: 'Historical daily maximum.
+
+            Units: metric = °C, us = °F, uk = °C, ca = °C'
+      type: object
+      title: TimeMachine_PointDailyStatsTemperatureData
+    TimeMachine_TimeMachineDailyPrecipitationData:
+      properties:
+        total:
+          type: number
+          description: 'Units: metric = mm/h, us = inches per hour, uk = mm/h, ca = mm/h'
+        type:
+          type: string
+          description: ''
+      type: object
+      title: TimeMachine_TimeMachineDailyPrecipitationData
+    TimeMachine_TimeMachineWindData:
+      properties:
+        speed:
+          type: integer
+          description: 'Wind speed 10 metres above the ground.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: integer
+          description: 'Wind gust speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        angle:
+          type: integer
+          description: 'Wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: deg'
+        dir:
+          type: string
+          description: 'Wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+      type: object
+      title: TimeMachine_TimeMachineWindData
+    Point_PointDailyMorningWindData:
+      properties:
+        speed:
+          type: number
+          description: 'Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        gusts:
+          type: number
+          description: 'Wind gust speed. (morning max)
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        dir:
+          type: string
+          description: 'Morning wind direction in `N`, `NNE`, `NE`, ..., `NNW` format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        angle:
+          type: number
+          description: 'Morning wind direction angle in degrees, 180° means wind from the south.
+
+            Unit: degrees'
+      type: object
+      title: Point_PointDailyMorningWindData
+    Point_PointDailyAllDayProbData:
+      properties:
+        precipitation:
+          type: integer
+          description: 'Probability of non-zero precipitation.
+
+            Unit: \%'
+        storm:
+          type: number
+          description: 'Total precipitation amount accumulated since last hour.
+
+            Unit: mm/h'
+        freeze:
+          type: number
+          description: 'Probability the temperature drops below 0 °C. (allday avg)
+
+            Unit: %'
+      type: object
+      title: Point_PointDailyAllDayProbData
+    Point_PointMinutelyPrecipitationData:
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Datetime in YYYY-MM-DDTHH:MM:SS format.
+          example: '2022-03-30T18:00:00'
+        precipitation:
+          type: number
+          description: 'Minutely precipitation amount (per hour). For the startup tier, showing one value per 10 minutes.
+
+            For other tiers, showing one value per each minute.
+
+
+            Unit: mm/h'
+      type: object
+      title: Point_PointMinutelyPrecipitationData
+    Point_PointDailyStatsWindData:
+      properties:
+        avg_speed:
+          type: number
+          description: 'Long-term average wind speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        avg_angle:
+          type: number
+          description: 'Long-term average wind angle.
+
+            Unit: deg'
+        avg_dir:
+          type: string
+          description: 'Long-term average wind direction in ''N'', ''NNE'', ''NE'', ... ''NNW'' format.
+
+            Unit: 16-point compass direction (N, NNE, NE, ..., NNW)'
+        max_speed:
+          type: number
+          description: 'Historical daily maximum wind speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+        max_gust:
+          type: number
+          description: 'Historical daily maximum wind gust speed.
+
+            Units: metric = m/s, us = mph, uk = mph, ca = km/h'
+      type: object
+      title: Point_PointDailyStatsWindData
   securitySchemes:
-    apiKeyQuery:
-      type: apiKey
-      in: query
-      name: key
-    apiKeyHeader:
+    APIKeyHeader:
       type: apiKey
       in: header
       name: X-API-Key
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: Authorization

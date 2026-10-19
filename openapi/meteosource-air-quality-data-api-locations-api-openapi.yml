@@ -1,147 +1,444 @@
 openapi: 3.2.0
 info:
-  title: MeteoSource Air Quality Data Locations API
-  description: MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data, location lookup, weather maps, and historical Time Machine data.
-  version: '1.0'
-  contact:
-    name: MeteoSource
-    url: https://www.meteosource.com/
-  license:
-    name: Proprietary
-    url: https://www.meteosource.com/terms-of-service
+  title: Documentation for your Premium plan Locations API
+  description: 'This interactive documentation lets you try real API requests. Select an endpoint on the left and read its description for details about the available parameters. Click `Test Request` to open the interactive API client, fill in the parameters, and press `Send` to view a full API response. You can then inspect the JSON response, copy the `curl` command to run it on your machine, or obtain a URL of the request.
+
+
+    The Meteosource API is a RESTful API. Requests are made with `GET` and query parameters; responses are JSON-encoded, except where noted (e.g. the weather map endpoints return `image/png`).
+
+
+    ### Base URL
+
+    The base URL for this documentation is `https://www.meteosource.com/api/v1/premium`.
+
+
+    ### Authentication
+
+    Requests are authenticated with your unique API key, supplied in one of these ways:
+
+    * the `key` query parameter
+
+    * the `X-API-Key` header
+
+    * the `Authorization: Bearer ` header
+
+
+    Specifying the `key` query parameter together with either header is rejected with a `403` error, as is specifying none of them. If both headers are present, `X-API-Key` takes precedence and `Authorization` is ignored. You can find and manage your API key in your dashboard.
+
+
+    ### Errors
+
+    The API returns standard HTTP status codes. Error responses include a JSON body with a `detail` field describing the problem:
+
+    ```json
+
+    { "detail": "explanation of what went wrong" }
+
+    ```
+
+    Common error codes: `400` (invalid parameter), `402` (daily request limit exceeded), `403` (API key missing, invalid, or specified twice), `429` (per-minute rate limit exceeded).
+
+
+    ### Pagination
+
+    The Meteosource API does not use pagination - all results for a request are returned at once.
+
+
+    ### Important notes
+
+
+    * For a detailed description of the response variables, consult the response `Schema`
+
+    * Don''t assume a fixed set or order of variables and sections - new ones may be added over time. Always check a field is present before using it.
+
+    * The response includes an `Expires` header marking when the data will next change. Use it to avoid unnecessary requests and improve your app''s performance.
+
+    * HTTP compression is supported - add an `Accept-Encoding: gzip` header to enable it.'
+  version: v1
 servers:
-- url: https://www.meteosource.com/api/v1
-  description: Production
-security:
-- apiKeyQuery: []
-- apiKeyHeader: []
+- url: https://www.meteosource.com/api/v1/premium
 tags:
 - name: Locations
-  description: Location lookup endpoints.
+  description: Search for places and resolve place IDs, for use as the `place_id` parameter in Weather endpoints.
 paths:
-  /free/find_places:
+  /find_places:
     get:
-      summary: Find places by name or ZIP
-      description: Search for locations by place name or ZIP code.
-      operationId: findPlaces
       tags:
       - Locations
+      summary: Search for places
+      description: 'You can use this endpoint to obtain `place_id` of the location you want, to be used in the Weather endpoints.
+
+        The response also contains detailed information about the location, such as coordinates, timezone and the country the place belongs to.
+
+
+        Unlike the Search for places by prefix endpoint, complete words are required here. You can search for cities,
+
+        mountains, lakes, countries, ZIP codes, etc. The response can contain multiple places, sorted by relevance.
+
+        You can then identify the one you want by coordinates, country, or the administrative area.'
+      operationId: find_places_find_places_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
       parameters:
       - name: text
         in: query
         required: true
         schema:
           type: string
+          description: Place name or ZIP code
+        description: Place name or ZIP code
       - name: language
         in: query
+        required: false
         schema:
           type: string
-      - name: area
+          enum:
+          - cs
+          - en
+          - de
+          - es
+          - fr
+          - pl
+          - pt
+          x-enumDescriptions:
+            cs: Czech
+            de: German
+            en: English
+            es: Spanish
+            fr: French
+            pl: Polish
+            pt: Portuguese
+          description: The language of text summaries and place names (variable names are never translated).
+          default: en
+        description: The language of text summaries and place names (variable names are never translated).
+      - name: key
         in: query
+        required: false
         schema:
           type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
       responses:
         '200':
-          description: Matching locations.
+          description: Successful Response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Place'
-  /free/find_places_prefix:
+                  $ref: '#/components/schemas/FindPlacesModel'
+        '400':
+          description: Error in passed parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /find_places_prefix:
     get:
-      summary: Find places by prefix
-      description: Search for locations by prefix.
-      operationId: findPlacesByPrefix
       tags:
       - Locations
+      summary: Search for places by prefix
+      description: 'You can use this endpoint to obtain `place_id` of the location you want, to be used in the Weather endpoints.
+
+        The response also contains detailed information about the location, such as coordinates, timezone and the country the place belongs to.
+
+
+        Unlike the Search for places endpoint, you should only specify the prefix of the place you are looking for. This is particularly useful for autocomplete forms. You can search for cities, mountains, lakes, countries, ZIP codes, etc. The response can contain multiple places, sorted by relevance. You can then identify the one you want by coordinates, country, or the administrative area.'
+      operationId: find_places_prefix_find_places_prefix_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
       parameters:
       - name: text
         in: query
         required: true
         schema:
           type: string
+          description: Place name or ZIP code
+        description: Place name or ZIP code
       - name: language
         in: query
+        required: false
         schema:
           type: string
-      - name: area
+          enum:
+          - cs
+          - en
+          - de
+          - es
+          - fr
+          - pl
+          - pt
+          x-enumDescriptions:
+            cs: Czech
+            de: German
+            en: English
+            es: Spanish
+            fr: French
+            pl: Polish
+            pt: Portuguese
+          description: The language of text summaries and place names (variable names are never translated).
+          default: en
+        description: The language of text summaries and place names (variable names are never translated).
+      - name: key
         in: query
+        required: false
         schema:
           type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
       responses:
         '200':
-          description: Matching locations.
+          description: Successful Response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Place'
-  /free/nearest_place:
-    get:
-      summary: Find nearest place to coordinates
-      description: Returns the nearest known place for the given coordinates.
-      operationId: findNearestPlace
-      tags:
-      - Locations
-      parameters:
-      - $ref: '#/components/parameters/Lat'
-      - $ref: '#/components/parameters/Lon'
-      - name: language
-        in: query
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Nearest place.
+                  $ref: '#/components/schemas/FindPlacesModel'
+        '400':
+          description: Error in passed parameter.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Place'
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /nearest_place:
+    get:
+      tags:
+      - Locations
+      summary: Search for nearest place by coordinates
+      description: 'You can use this endpoint to find the nearest place from given coordinates.
+
+
+        ### Notes
+
+        * If you specify coordinates of a secluded place (e.g. middle of the ocean), the nearest point can be very far from the coordinates.'
+      operationId: nearest_place_nearest_place_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
+      parameters:
+      - name: lat
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+        description: Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+      - name: lon
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+        description: Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+      - name: language
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - cs
+          - en
+          - de
+          - es
+          - fr
+          - pl
+          - pt
+          x-enumDescriptions:
+            cs: Czech
+            de: German
+            en: English
+            es: Spanish
+            fr: French
+            pl: Polish
+            pt: Portuguese
+          description: The language of text summaries and place names (variable names are never translated).
+          default: en
+        description: The language of text summaries and place names (variable names are never translated).
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindPlacesModel'
+        '400':
+          description: Error in passed parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Place:
-      type: object
+    ValidationError:
       properties:
-        place_id:
-          type: string
-        name:
-          type: string
-        adm_area1:
-          type: string
-        adm_area2:
-          type: string
-        country:
-          type: string
-        lat:
-          type: string
-        lon:
-          type: string
-        timezone:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+        msg:
           type: string
         type:
           type: string
-  parameters:
-    Lat:
-      name: lat
-      in: query
-      description: Latitude in decimal degrees.
-      schema:
-        type: number
-    Lon:
-      name: lon
-      in: query
-      description: Longitude in decimal degrees.
-      schema:
-        type: number
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    FindPlacesModel:
+      properties:
+        name:
+          type: string
+          description: name of the place
+          default: London
+        place_id:
+          type: string
+          description: unique identifier of the place, which can be used in /point and /map endpoints
+          default: london
+        adm_area1:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: first-level administrative area (a US state, for example)
+          default: England
+        adm_area2:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: second-level administrative area (a US county, for example)
+          default: Greater London
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: name of the country
+          default: United Kingdom
+        lat:
+          type: string
+          description: Latitude of the point, always in the format \<float><N/S>, for example ``23.5S``
+          default: 23.2N
+        lon:
+          type: string
+          description: Longitude of the point, always in format \<float><E/W>, for example ``23.5W``
+          default: 15.3E
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Timezone of the point in tzinfo format.
+          default: Europe/London
+        type:
+          type: string
+          description: "The character of the place. May be one of the following values:\n\n* administrative areas (states, counties, districts...): ``administrative_area``\n* country: ``country``\n* a different political entity from a country (for example, a dependent teritory): ``political_entity``\n* villages, towns and cities: ``settlement``\n* air industry locations: ``airbase``, ``airfield``, ``heliport``, ``airport``, ``airport_terminal``\n* places related to water: ``bay``, ``channel``, ``fjord``, ``lake``, ``pond``, ``falls``, ``gulf``,\n    ``harbor``, ``reservoir``, ``sea``, ``dam``, ``cape``, ``island``, ``peninsula``\n* places related to mountain areas: ``hill``, ``mountain``, ``peak``, ``valley``, ``volcano``, ``canyon``\n* other places related to nature: ``park``, ``reserve``, ``resort``, ``desert``\n* places based on postcodes: ``postcode``\n        "
+          default: settlement
+      type: object
+      title: FindPlacesModel
+    GeneralRequestError:
+      properties:
+        detail:
+          type: string
+      type: object
+      required:
+      - detail
+      title: GeneralRequestError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+      type: object
+      title: HTTPValidationError
   securitySchemes:
-    apiKeyQuery:
-      type: apiKey
-      in: query
-      name: key
-    apiKeyHeader:
+    APIKeyHeader:
       type: apiKey
       in: header
       name: X-API-Key
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: Authorization

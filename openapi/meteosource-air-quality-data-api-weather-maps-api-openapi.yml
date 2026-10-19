@@ -1,0 +1,404 @@
+openapi: 3.2.0
+info:
+  title: Documentation for your Premium plan Weather maps API
+  description: 'This interactive documentation lets you try real API requests. Select an endpoint on the left and read its description for details about the available parameters. Click `Test Request` to open the interactive API client, fill in the parameters, and press `Send` to view a full API response. You can then inspect the JSON response, copy the `curl` command to run it on your machine, or obtain a URL of the request.
+
+
+    The Meteosource API is a RESTful API. Requests are made with `GET` and query parameters; responses are JSON-encoded, except where noted (e.g. the weather map endpoints return `image/png`).
+
+
+    ### Base URL
+
+    The base URL for this documentation is `https://www.meteosource.com/api/v1/premium`.
+
+
+    ### Authentication
+
+    Requests are authenticated with your unique API key, supplied in one of these ways:
+
+    * the `key` query parameter
+
+    * the `X-API-Key` header
+
+    * the `Authorization: Bearer ` header
+
+
+    Specifying the `key` query parameter together with either header is rejected with a `403` error, as is specifying none of them. If both headers are present, `X-API-Key` takes precedence and `Authorization` is ignored. You can find and manage your API key in your dashboard.
+
+
+    ### Errors
+
+    The API returns standard HTTP status codes. Error responses include a JSON body with a `detail` field describing the problem:
+
+    ```json
+
+    { "detail": "explanation of what went wrong" }
+
+    ```
+
+    Common error codes: `400` (invalid parameter), `402` (daily request limit exceeded), `403` (API key missing, invalid, or specified twice), `429` (per-minute rate limit exceeded).
+
+
+    ### Pagination
+
+    The Meteosource API does not use pagination - all results for a request are returned at once.
+
+
+    ### Important notes
+
+
+    * For a detailed description of the response variables, consult the response `Schema`
+
+    * Don''t assume a fixed set or order of variables and sections - new ones may be added over time. Always check a field is present before using it.
+
+    * The response includes an `Expires` header marking when the data will next change. Use it to avoid unnecessary requests and improve your app''s performance.
+
+    * HTTP compression is supported - add an `Accept-Encoding: gzip` header to enable it.'
+  version: v1
+servers:
+- url: https://www.meteosource.com/api/v1/premium
+tags:
+- name: Weather maps
+  description: PNG map images of weather variables (e.g. temperature, precipitation, cloud cover) for a given area and time, plus the base map tileset used to render them as an interactive map.
+paths:
+  /map:
+    get:
+      tags:
+      - Weather maps
+      summary: Get PNG weather map
+      description: 'Get PNG weather forecast maps for given area and variable
+
+
+        ### Area specification
+
+        There are two ways to specify geographical area you need for your map:
+
+        1. Specify `X` and `Y` coordinates and zoom level `Z` of desired tile in Google Maps Tile notation.
+
+        2. Specify latitude and longitude bounds of the area you want to cover.
+
+
+        ### Notes
+
+        * The resulting PNG maps are **always** in Google Mercator projection (EPSG:3857).
+
+        * As Meteosource only covers areas between latitudes 80° and -80°, you can only request maps within these bounds, when specifying the latitude and longitude boundaries. When specifying the area using Google Maps Tile notation, the regions outside our supported latitudes will be fully transparent.
+
+        * The finest resolution is not available for maps covering very large regions. The resulting map will be automatically downscaled in this case, to guarantee high-speed responses.
+
+        * Weather maps are only supported for forecasts, not for archive data.
+
+
+        ### Color maps
+
+        Below you will find color maps for each variable that you can use as a legend for your map. You can also download numerical references for the color maps.
+
+
+        **`temperature`** (unit: `°C`)
+
+
+        **`feels_like_temperature`** (unit: `°C`)
+
+
+        **`clouds`** (unit: `%`)
+
+
+        **`precipitation`** (unit: `mm/h`)
+
+
+        **`wind_speed`** (unit: `m/s`)
+
+
+        **`wind_gust`** (unit: `m/s`)
+
+
+        **`pressure`** (unit: `hPa`)
+
+
+        **`humidity`** (unit: `%`)
+
+
+        **`wave_height`** (unit: `m`)
+
+
+        **`wave_period`** (unit: `s`)
+
+
+        **`sea_temperature`** (unit: `°C`)
+
+
+        **`air_quality`** (unit: `Index`)
+
+
+        **`ozone_surface`** (unit: `µg/m³`)
+
+
+        **`ozone_total`** (unit: `Dobson`)
+
+
+        **`no2`** (unit: `µg/m³`)
+
+
+        **`pm2.5`** (unit: `µg/m³`)'
+      operationId: map_map_get
+      security:
+      - APIKeyHeader: []
+      - AuthorizationHeader: []
+      parameters:
+      - name: tile_x
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: The X coordinate of Google Maps tile
+        description: The X coordinate of Google Maps tile
+      - name: tile_y
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: The Y coordinate of Google Maps tile
+        description: The Y coordinate of Google Maps tile
+      - name: tile_zoom
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: The zoom level of Google Maps tile
+        description: The zoom level of Google Maps tile
+      - name: min_lat
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Minimal latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.2
+
+            '
+        description: 'Minimal latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.2
+
+          '
+      - name: min_lon
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Minimal longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.2
+
+            '
+        description: 'Minimal longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.2
+
+          '
+      - name: max_lat
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Maximal latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.2.
+
+            '
+        description: 'Maximal latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.2.
+
+          '
+      - name: max_lon
+        in: query
+        required: false
+        schema:
+          type: string
+          description: 'Maximal longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.2
+
+            '
+        description: 'Maximal longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.2
+
+          '
+      - name: variable
+        in: query
+        required: true
+        schema:
+          type: string
+          description: 'Name of the variable for your map. Available values are:
+
+
+            * `temperature`: Temperature 2 metres above ground
+
+            * `feels_like_temperature`: Feels like temperature
+
+            * `clouds`: Percentage of sky covered by clouds
+
+            * `precipitation`: Total precipitation amount accumulated since last hour
+
+            * `wind_speed`: Wind speed 10 metres above the ground
+
+            * `wind_gust`: Wind gust speed
+
+            * `pressure`: Atmospheric pressure at mean sea level
+
+            * `humidity`: Relative humidity
+
+            * `wave_height`: Wave height
+
+            * `wave_period`: Wave period
+
+            * `sea_temperature`: Sea temperature (available only for +-24 hours)
+
+            * `air_quality`: Air quality index
+
+            * `ozone_surface`: Ozone at surface level
+
+            * `ozone_total`: Total column ozone
+
+            * `no2`: Nitrogen dioxide at surface level
+
+            * `pm2.5`: Particulate matter d < 2.5 µm (PM2.5)
+
+            '
+        description: 'Name of the variable for your map. Available values are:
+
+
+          * `temperature`: Temperature 2 metres above ground
+
+          * `feels_like_temperature`: Feels like temperature
+
+          * `clouds`: Percentage of sky covered by clouds
+
+          * `precipitation`: Total precipitation amount accumulated since last hour
+
+          * `wind_speed`: Wind speed 10 metres above the ground
+
+          * `wind_gust`: Wind gust speed
+
+          * `pressure`: Atmospheric pressure at mean sea level
+
+          * `humidity`: Relative humidity
+
+          * `wave_height`: Wave height
+
+          * `wave_period`: Wave period
+
+          * `sea_temperature`: Sea temperature (available only for +-24 hours)
+
+          * `air_quality`: Air quality index
+
+          * `ozone_surface`: Ozone at surface level
+
+          * `ozone_total`: Total column ozone
+
+          * `no2`: Nitrogen dioxide at surface level
+
+          * `pm2.5`: Particulate matter d < 2.5 µm (PM2.5)
+
+          '
+      - name: datetime
+        in: query
+        required: true
+        schema:
+          type: string
+          description: 'There are two ways to specify date and time for your map:
+
+
+            1. Datetime in `YYYY-MM-DDTHH:MM` format and `UTC` timezone, e.g. `2021-08-24T12:00`
+
+            2. Offset from current time in `[+-]<minutes|hours|days>` format, e.g. `+10minutes`, `-2hours` or `+1days`
+
+            '
+        description: 'There are two ways to specify date and time for your map:
+
+
+          1. Datetime in `YYYY-MM-DDTHH:MM` format and `UTC` timezone, e.g. `2021-08-24T12:00`
+
+          2. Offset from current time in `[+-]<minutes|hours|days>` format, e.g. `+10minutes`, `-2hours` or `+1days`
+
+          '
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+        description: Your unique API key. You can either specify it in this parameter, or set it in `X-API-Key` header.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/x-protobuf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Error in passed parameter.
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '403':
+          description: API key not specified or invalid.
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '402':
+          description: Maximum requests per day limit exceeded.
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '429':
+          description: Maximum requests per minute limit exceeded.
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/GeneralRequestError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+        msg:
+          type: string
+        type:
+          type: string
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GeneralRequestError:
+      properties:
+        detail:
+          type: string
+      type: object
+      required:
+      - detail
+      title: GeneralRequestError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: Authorization

@@ -1,28 +1,20 @@
 {
   "provider": "meteosource-air-quality-data-api",
   "sources": [
-    "_original/meteosource-air-quality-data-api-openapi.yml"
+    "_original/meteosource-air-quality-data-api-openapi.json"
   ],
   "outputs": [
-    "meteosource-air-quality-data-api-air-quality-api-openapi.yml",
-    "meteosource-air-quality-data-api-history-api-openapi.yml",
     "meteosource-air-quality-data-api-locations-api-openapi.yml",
-    "meteosource-air-quality-data-api-maps-api-openapi.yml",
-    "meteosource-air-quality-data-api-weather-api-openapi.yml"
+    "meteosource-air-quality-data-api-weather-api-openapi.yml",
+    "meteosource-air-quality-data-api-weather-maps-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "meteosource-air-quality-data-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "meteosource-air-quality-data-api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+1 apis, 3 total)"
   ],
-  "skipped": [
-    "meteosource-air-quality-data-api-air-quality-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "meteosource-air-quality-data-api-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "meteosource-air-quality-data-api-locations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "meteosource-air-quality-data-api-maps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "meteosource-air-quality-data-api-weather-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }
