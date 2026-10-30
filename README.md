@@ -1,4 +1,4 @@
-# MeteoSource Air Quality Data API (meteosource-air-quality-data-api)
+# MeteoSource Air Quality Data API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,53 +66,124 @@
 
 MeteoSource provides an Air Quality API delivering hour-by-hour pollution data for any location on Earth, with forecasts up to 5 days ahead. The API also offers weather forecast data from multiple meteorological models.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/meteosource-air-quality-data-api/refs/heads/main/apis.yml)
+**Areas:** Air Quality · Environmental Data · Forecasting · Weather
 
-## Scope
+## MeteoSource Air Quality Data API on APIs.io
 
-- **Type:** Index
+Everything profiled for MeteoSource Air Quality Data API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/meteosource-air-quality-data-api/](https://apis.io/providers/meteosource-air-quality-data-api/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Air Quality
-- Environmental Data
-- Forecasting
-- Weather
+- [MeteoSource Air Quality Data API Air Quality API](https://apis.io/apis/meteosource-air-quality-data-api/meteosource-air-quality-data-api-air-quality-api/) — Air quality and pollution forecasts.
+- [MeteoSource Air Quality Data API History API](https://apis.io/apis/meteosource-air-quality-data-api/meteosource-air-quality-data-api-history-api/) — Historical Time Machine data.
+- [MeteoSource Air Quality Data API Locations API](https://apis.io/apis/meteosource-air-quality-data-api/meteosource-air-quality-data-api-locations-api/) — Location lookup endpoints.
+- [MeteoSource Air Quality Data API Maps API](https://apis.io/apis/meteosource-air-quality-data-api/meteosource-air-quality-data-api-maps-api/) — Tile-based weather and pollution maps.
+- [MeteoSource Air Quality Data API Weather API](https://apis.io/apis/meteosource-air-quality-data-api/meteosource-air-quality-data-api-weather-api/) — Current and forecasted weather endpoints.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-11-07
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### MeteoSource Air Quality Data API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Access air quality data through the MeteoSource API for any location on Earth, providing hour-by-hour pollution forecasts up to 5 days.
+- [Meteosource Air Quality Data Api Agentic Access](https://apis.io/agentic-access/meteosource-air-quality-data-api/meteosource-air-quality-data-api-agentic-access/)
 
-- **Human URL:** [https://www.meteosource.com/air-quality-api](https://www.meteosource.com/air-quality-api)
-- **Base URL:** `https://www.meteosource.com/api/v1`
+#### Collections (6)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Air Quality
-- Weather
+- [MeteoSource Air Quality Data API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api/)
+- [MeteoSource Data Air Quality API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api-air-quality-api/)
+- [MeteoSource Data Air Quality History API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api-history-api/)
+- [MeteoSource Data Air Quality Locations API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api-locations-api/)
+- [MeteoSource Data Air Quality Maps API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api-maps-api/)
+- [MeteoSource Data Air Quality Weather API](https://apis.io/collections/meteosource-air-quality-data-api/open-meteosource-air-quality-data-api-weather-api/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://www.meteosource.com/air-quality-api)
-- [OpenAPI](openapi/meteosource-air-quality-data-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/meteosource-air-quality-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/meteosource-air-quality-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Meteosource Air Quality Data Api Authentication](https://apis.io/security/meteosource-air-quality-data-api/meteosource-air-quality-data-api-authentication/)
+- [Meteosource Air Quality Data Api Domain Security](https://apis.io/security/meteosource-air-quality-data-api/meteosource-air-quality-data-api-domain-security/)
 
-- [GitHub Organization](https://github.com/Meteosource)
-- [Portal](https://www.meteosource.com/)
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Meteosource Air Quality Data Api Plans Pricing](https://apis.io/plans/meteosource-air-quality-data-api/meteosource-air-quality-data-api-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Meteosource Air Quality Data Api Rate Limits](https://apis.io/rate-limits/meteosource-air-quality-data-api/meteosource-air-quality-data-api-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Meteosource Air Quality Data Api Finops](https://apis.io/finops/meteosource-air-quality-data-api/meteosource-air-quality-data-api-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.meteosource.com/)
 - [Pricing](https://www.meteosource.com/pricing)
-- [Sign Up](https://www.meteosource.com/client/register)
+- [Blog](https://www.meteosource.com/blog)
+- [GitHub](https://github.com/Meteosource)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 31.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 47.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 33.3 |
+| Access clarity | 31.6 |
+
+**Agent readiness 20.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/meteosource-air-quality-data-api/](https://apis.io/providers/meteosource-air-quality-data-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MeteoSource Air Quality Data API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/meteosource-air-quality-data-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
